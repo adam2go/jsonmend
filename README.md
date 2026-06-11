@@ -1,5 +1,10 @@
 # jsonmend
 
+[![CI](https://github.com/adam2go/jsonmend/actions/workflows/ci.yml/badge.svg)](https://github.com/adam2go/jsonmend/actions/workflows/ci.yml)
+[![PyPI](https://img.shields.io/pypi/v/jsonmend)](https://pypi.org/project/jsonmend/)
+[![conformance](https://img.shields.io/badge/conformance_corpus-460%2F460-brightgreen)](corpus/scoreboard.md)
+[![license](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
+
 **Mends the JSON your LLM almost wrote.**
 
 Truncated tool calls, markdown fences, single quotes, bare keys, Python
