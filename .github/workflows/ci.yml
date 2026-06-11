@@ -19,3 +19,16 @@ jobs:
           python-version: ${{ matrix.python-version }}
       - run: pip install -e . pytest
       - run: pytest
+
+  test-js:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        node-version: ["18", "20", "22"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+      - run: node js/test.cjs

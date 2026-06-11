@@ -313,7 +313,9 @@ class MendMachine:
                 while i < n and s[i] in ws:
                     i += 1
                 if i >= n:
-                    if self.final:
+                    # mode 2 (attach a finished value) needs no new bytes;
+                    # let it run so snapshots see the value immediately
+                    if self.final or mode == 2:
                         break
                     s = None
                     yield

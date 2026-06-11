@@ -241,18 +241,18 @@ def _iter_dumps(value, ensure_ascii=True):
             items = list(v.items())
             for idx in range(len(items) - 1, -1, -1):
                 k, val = items[idx]
-                if idx:
-                    stack.append(("t", ", "))
                 stack.append(("v", val))
                 stack.append(("t", enc(k) + ": "))
+                if idx:
+                    stack.append(("t", ", "))
             continue
         if isinstance(v, list):
             out.append("[")
             stack.append(("t", "]"))
             for idx in range(len(v) - 1, -1, -1):
+                stack.append(("v", v[idx]))
                 if idx:
                     stack.append(("t", ", "))
-                stack.append(("v", v[idx]))
             continue
         if v is True:
             out.append("true")

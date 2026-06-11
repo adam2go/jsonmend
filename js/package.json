@@ -1,0 +1,42 @@
+{
+  "name": "jsonmend",
+  "version": "0.1.0",
+  "description": "Mends the JSON your LLM almost wrote — repair + true incremental streaming, defined by an open conformance corpus",
+  "license": "MIT",
+  "author": "adam2go",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/adam2go/jsonmend.git",
+    "directory": "js"
+  },
+  "homepage": "https://github.com/adam2go/jsonmend",
+  "keywords": [
+    "json",
+    "repair",
+    "fix",
+    "llm",
+    "streaming",
+    "incremental",
+    "agent",
+    "tool-calls",
+    "jsonrepair"
+  ],
+  "main": "index.cjs",
+  "exports": {
+    ".": {
+      "import": "./index.mjs",
+      "require": "./index.cjs"
+    }
+  },
+  "files": [
+    "index.cjs",
+    "index.mjs",
+    "README.md"
+  ],
+  "scripts": {
+    "test": "node test.cjs"
+  },
+  "engines": {
+    "node": ">=14"
+  }
+}
