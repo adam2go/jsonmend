@@ -1,0 +1,16 @@
+CC0 1.0 Universal
+
+The jsonmend conformance corpus (the case files under cases/ and the
+accompanying documentation) is dedicated to the public domain under the
+Creative Commons CC0 1.0 Universal dedication.
+
+To the extent possible under law, the authors have waived all copyright
+and related or neighboring rights to this work. You can copy, modify,
+distribute and use the work, including for commercial purposes, all
+without asking permission.
+
+Full legal text: https://creativecommons.org/publicdomain/zero/1.0/legalcode
+
+Note: a small number of case inputs are derived from the test suites of
+json_repair (MIT) and jsonrepair (ISC); their license texts are vendored
+in licenses/ and the affected cases carry a `source` tag.

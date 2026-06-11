@@ -163,6 +163,8 @@ def main():
     ap.add_argument("--impl", default=None,
                     choices=["jsonmend", "json_repair", "jsonrepair"])
     ap.add_argument("--category", default=None)
+    ap.add_argument("--write", action="store_true",
+                    help="write corpus/scoreboard.md")
     args = ap.parse_args()
 
     cases = load_cases()
@@ -224,6 +226,53 @@ def main():
             for key, why in fails[name]:
                 print("- %s: %s" % (key, why))
                 print("    input: %r" % cases[key]["input"][:100])
+
+    if args.write and not args.impl and not args.category:
+        import importlib.metadata as md
+        try:
+            jr_ver = md.version("json_repair")
+        except Exception:
+            jr_ver = "?"
+        try:
+            with open(os.path.join(
+                    ROOT, "node_modules", "jsonrepair",
+                    "package.json"), encoding="utf-8") as f:
+                jj_ver = json.load(f)["version"]
+        except Exception:
+            jj_ver = "?"
+        sys.path.insert(0, os.path.join(ROOT, "src"))
+        import jsonmend as jm
+        lines = [
+            "# Scoreboard",
+            "",
+            "Pass rates over the conformance corpus "
+            "(see [README.md](README.md) for pass criteria).",
+            "",
+            "Versions: jsonmend %s, json_repair %s (PyPI `json-repair`), "
+            "jsonrepair %s (npm). Regenerate with "
+            "`python tools/referee.py --write`." % (
+                jm.__version__, jr_ver, jj_ver),
+            "",
+            "| category | cases | jsonmend | json_repair | jsonrepair |",
+            "|---|---|---|---|---|",
+        ]
+        for cat in cats:
+            total = table[cat]["jsonmend"][1]
+            row = "| %s | %d |" % (cat, total)
+            for name in ("jsonmend", "json_repair", "jsonrepair"):
+                ok = table[cat][name][0]
+                row += " %d |" % ok
+            lines.append(row)
+        row = "| **total** | **%d** |" % totals["jsonmend"][1]
+        for name in ("jsonmend", "json_repair", "jsonrepair"):
+            ok, total = totals[name]
+            row += " **%d (%.1f%%)** |" % (ok, 100 * ok / total)
+        lines.append(row)
+        lines.append("")
+        out = os.path.join(ROOT, "corpus", "scoreboard.md")
+        with open(out, "w", encoding="utf-8") as f:
+            f.write("\n".join(lines))
+        print("\nwrote", out)
 
 
 if __name__ == "__main__":

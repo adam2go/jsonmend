@@ -18,6 +18,7 @@ Design rules (the jsonmend conformance semantics, see corpus/):
 
 from __future__ import annotations
 
+import json as _json
 import re as _re
 
 __all__ = ["JSONMendError", "MendMachine", "SKIP"]
@@ -78,6 +79,17 @@ SKIP = object()  # "no value produced"
 # '+' (concat) is deliberately absent: it needs the slow path.
 _STR_DELIMS = frozenset(',}]):')
 _HIGH_SURR_RE = _re.compile(r"\\u[dD][89abAB][0-9a-fA-F]{2}$")
+
+
+def _reject_constant(name):
+    raise ValueError(name)
+
+
+# speculative C-speed decoder for complete, clean sub-values.  It must
+# reject anything the mending machine handles differently: non-finite
+# constants (parse_constant) and surrogate escapes (input guard below).
+_SPEC_DECODER = _json.JSONDecoder(parse_constant=_reject_constant)
+_SPEC_GUARD_RE = _re.compile("[\ud800-\udfff]|\\\\[uU][dD][89a-fA-F]")
 
 
 def _decode_escapes(raw):
@@ -159,7 +171,7 @@ class MendMachine:
 
     __slots__ = ("s", "n", "final", "stack", "values", "prose", "done",
                  "result", "had_nonfinite", "partial", "partial_end",
-                 "_undo", "_gen")
+                 "_undo", "_gen", "_spec", "_spec_fails", "doomed_from")
 
     def __init__(self):
         self.s = ""
@@ -173,6 +185,9 @@ class MendMachine:
         self.had_nonfinite = False
         self.partial = None       # (container|None, start) for snapshots
         self.partial_end = None   # display end for a pending candidate
+        self._spec = None         # speculative raw_decode: None=unknown
+        self._spec_fails = 0
+        self.doomed_from = None   # raw_decode is known to fail before here
         self._undo = None
         self._gen = self._run()
         next(self._gen)           # prime to the first suspension point
@@ -369,6 +384,535 @@ class MendMachine:
                 break
 
             # ==================================================== dispatch
+            if mode == 1:
+                # --------------------------------------- expecting a value
+                in_obj = bool(stack) and stack[-1].kind == "o"
+                if at_eof:
+                    value = None if (in_obj and stack[-1].key is not None) \
+                        else SKIP
+                    mode = 2
+                    continue
+                if c == "{" or c == "[" or c == "(":
+                    if c != "(" and self.final and self._spec is not False:
+                        if self._spec or self._spec_ok():
+                            smode, payload, i2 = self._speculate(i)
+                            if smode == 2:
+                                value = payload
+                                i = i2
+                                mode = 2
+                                continue
+                            if smode:
+                                nf = payload
+                                if stack:
+                                    par = stack[-1]
+                                    if par.kind == "o":
+                                        if par.key is not None:
+                                            par.container[par.key] = \
+                                                nf.container
+                                            nf.eager = True
+                                    else:
+                                        par.container.append(nf.container)
+                                        nf.eager = True
+                                stack.append(nf)
+                                i = i2
+                                mode = smode
+                                continue
+                    child = {} if c == "{" else []
+                    nf = _Frame("o" if c == "{" else
+                                ("a" if c == "[" else "p"), child)
+                    if stack:
+                        par = stack[-1]
+                        if par.kind == "o":
+                            if par.key is not None:
+                                par.container[par.key] = child
+                                nf.eager = True
+                        else:
+                            par.container.append(child)
+                            nf.eager = True
+                    stack.append(nf)
+                    i += 1
+                    mode = 3 if c == "{" else 1
+                    continue
+                if c in "}],":
+                    value = None if (in_obj and stack[-1].key is not None) \
+                        else SKIP
+                    mode = 2
+                    continue
+                # ---- inline fast path: simple number
+                if c.isdigit() or c == "-":
+                    m = _NUM_RE.match(s, i)
+                    k = m.end() if m else i
+                    if m and k < n:
+                        nc = s[k]
+                        if nc in ",}]" or nc in ws:
+                            tok = m.group()
+                            if tok[-1].isdigit() and "_" not in tok and \
+                                    not _LEADING_ZERO_RE.match(tok):
+                                if "." in tok or "e" in tok or "E" in tok:
+                                    value = float(tok)
+                                else:
+                                    value = int(tok)
+                                i = k
+                                if stack:
+                                    fr = stack[-1]
+                                    if fr.kind == "o":
+                                        if fr.key is not None:
+                                            fr.container[fr.key] = value
+                                            fr.key = None
+                                        value = SKIP
+                                        mode = 4
+                                    else:
+                                        fr.container.append(value)
+                                        value = SKIP
+                                        mode = 5
+                                    while i < n and s[i] in " \t":
+                                        i += 1
+                                    if i < n and s[i] == ",":
+                                        i += 1
+                                        mode = 3 if mode == 4 else 1
+                                    continue
+                                mode = 2
+                                continue
+                # ---- inline fast path: literals
+                if c == "t" and s.startswith("true", i) and i + 4 < n and \
+                        s[i + 4] in ",}]":
+                    value = True
+                    i += 4
+                    mode = 2
+                    continue
+                if c == "f" and s.startswith("false", i) and i + 5 < n and \
+                        s[i + 5] in ",}]":
+                    value = False
+                    i += 5
+                    mode = 2
+                    continue
+                if c == "n" and s.startswith("null", i) and i + 4 < n and \
+                        s[i + 4] in ",}]":
+                    value = None
+                    i += 4
+                    mode = 2
+                    continue
+                if c == "T" and s.startswith("True", i) and i + 4 < n and \
+                        s[i + 4] in ",}]":
+                    value = True
+                    i += 4
+                    mode = 2
+                    continue
+                if c == "F" and s.startswith("False", i) and i + 5 < n and \
+                        s[i + 5] in ",}]":
+                    value = False
+                    i += 5
+                    mode = 2
+                    continue
+                if c == "N" and s.startswith("None", i) and i + 4 < n and \
+                        s[i + 4] in ",}]":
+                    value = None
+                    i += 4
+                    mode = 2
+                    continue
+                # ---- inline fast path: clean quoted string
+                if c == '"' or c == "'":
+                    j = s.find(c, i + 1)
+                    if j != -1 and j + 1 < n:
+                        d = s[j + 1]
+                        if (d in _STR_DELIMS or d in ws) and \
+                                s.find("\\", i + 1, j) == -1 and \
+                                s.find("\n", i + 1, j) == -1:
+                            if d in ws:
+                                # confirm next non-ws is a delimiter
+                                p = j + 1
+                                while p < n and s[p] in ws:
+                                    p += 1
+                                ok = (p >= n and self.final) or \
+                                     (p < n and s[p] in _STR_DELIMS)
+                            else:
+                                ok = True
+                            if ok:
+                                value = s[i + 1:j]
+                                i = j + 1
+                                if stack:
+                                    fr = stack[-1]
+                                    if fr.kind == "o":
+                                        if fr.key is not None:
+                                            fr.container[fr.key] = value
+                                            fr.key = None
+                                        value = SKIP
+                                        mode = 4
+                                    else:
+                                        fr.container.append(value)
+                                        value = SKIP
+                                        mode = 5
+                                    while i < n and s[i] in " \t":
+                                        i += 1
+                                    if i < n and s[i] == ",":
+                                        i += 1
+                                        mode = 3 if mode == 4 else 1
+                                    continue
+                                mode = 2
+                                continue
+                # scalar (string / number / literal / unquoted)
+                ctx = _TOP if not stack else (
+                    _OVAL if stack[-1].kind == "o" else _ARR)
+                pos = i
+                s = None
+                value, i = yield from self._scalar(pos, ctx)
+                s = self.s
+                n = self.n
+                mode = 2
+                continue
+
+            if mode == 3:
+                # -------------------------------------- object expects key
+                fr = stack[-1]
+                if at_eof:
+                    stack.pop()
+                    value = self._pop_value(fr)
+                    mode = 2
+                    continue
+                if c == "}":
+                    i += 1
+                    stack.pop()
+                    value = self._pop_value(fr)
+                    mode = 2
+                    continue
+                if c == ",":
+                    i += 1
+                    continue
+                if c == "]":
+                    if not any(f.kind != "o" for f in stack[:-1]):
+                        i += 1
+                    stack.pop()
+                    value = self._pop_value(fr)
+                    mode = 2
+                    continue
+                if c == "[" and fr.container:
+                    # LLM split-array error: `"k": [...], [...]` — merge
+                    last_key = next(reversed(fr.container))
+                    if isinstance(fr.container[last_key], list):
+                        fr.key = last_key
+                        nf = _Frame("a", fr.container[last_key])
+                        nf.eager = True
+                        stack.append(nf)
+                        i += 1
+                        mode = 1
+                        continue
+                    stack.pop()
+                    value = self._pop_value(fr)
+                    mode = 2
+                    continue
+                if c == "{" or c == "[":
+                    stack.pop()
+                    value = self._pop_value(fr)
+                    mode = 2
+                    continue
+                if c == ")" and wrapper_depth:
+                    i += 1
+                    wrapper_depth -= 1
+                    continue
+                if c == ":":
+                    i += 1
+                    fr.key = None
+                    mode = 1
+                    continue
+                # ---- inline fast path: bare `key:`
+                if (c.isalpha() or c == "_") and c.isascii():
+                    m = _WORD_RE.match(s, i)
+                    k2 = m.end()
+                    if k2 < n:
+                        e2 = k2
+                        while e2 < n and s[e2] in " \t":
+                            e2 += 1
+                        if e2 < n and s[e2] == ":":
+                            fr.key = s[i:k2]
+                            i = e2 + 1
+                            mode = 1
+                            continue
+                # ---- inline fast path: clean `"key":`
+                if c == '"':
+                    j = s.find('"', i + 1)
+                    if j != -1 and \
+                            s.find("\\", i + 1, j) == -1 and \
+                            s.find("\n", i + 1, j) == -1:
+                        k2 = j + 1
+                        while k2 < n and s[k2] in " \t":
+                            k2 += 1
+                        if k2 < n and s[k2] == ":":
+                            fr.key = s[i + 1:j]
+                            i = k2 + 1
+                            mode = 1
+                            continue
+                pos = i
+                s = None
+                key, i = yield from self._key(pos)
+                s = self.s
+                n = self.n
+                if key is SKIP:
+                    if i < n and s[i] not in "}]":
+                        i += 1
+                    continue
+                fr.key = key
+                while True:
+                    while i < n and s[i] in ws:
+                        i += 1
+                    if i >= n and not self.final:
+                        s = None
+                        yield
+                        s = self.s
+                        n = self.n
+                        continue
+                    break
+                if i < n and s[i] == '"':
+                    # stray quote between key and colon (`{""a"": 1}`)
+                    p = i + 1
+                    while True:
+                        while p < n and s[p] in ws:
+                            p += 1
+                        if p >= n and not self.final:
+                            s = None
+                            yield
+                            s = self.s
+                            n = self.n
+                            continue
+                        break
+                    if p < n and (s[p] == ":" or s[p] == "："):
+                        i = p
+                if i < n and (s[i] == ":" or s[i] == "："):
+                    i += 1
+                elif i < n and s[i] == "=":
+                    i += 1
+                    if i < n and s[i] == ">":
+                        i += 1
+                elif i >= n or s[i] in ",}":
+                    fr.container[key] = None
+                    fr.key = None
+                    mode = 4
+                    continue
+                mode = 1
+                continue
+
+            if mode == 4:
+                # ------------------------------------- object after member
+                fr = stack[-1]
+                if at_eof:
+                    stack.pop()
+                    value = self._pop_value(fr)
+                    mode = 2
+                    continue
+                if c == ",":
+                    i += 1
+                    mode = 3
+                    continue
+                if c == "}":
+                    i += 1
+                    stack.pop()
+                    value = self._pop_value(fr)
+                    mode = 2
+                    continue
+                if c == "]":
+                    if not any(f.kind != "o" for f in stack[:-1]):
+                        i += 1
+                    stack.pop()
+                    value = self._pop_value(fr)
+                    mode = 2
+                    continue
+                if c == ";":
+                    i += 1
+                    mode = 3
+                    continue
+                if c == ")" and wrapper_depth:
+                    i += 1
+                    wrapper_depth -= 1
+                    continue
+                if c == "{" or c == "[":
+                    stack.pop()
+                    value = self._pop_value(fr)
+                    mode = 2
+                    continue
+                mode = 3
+                continue
+
+            if mode == 5:
+                fr = stack[-1]
+                if at_eof:
+                    stack.pop()
+                    value = self._pop_value(fr)
+                    mode = 2
+                    continue
+                if c == ",":
+                    i += 1
+                    mode = 1
+                    continue
+                if c == "]":
+                    i += 1
+                    stack.pop()
+                    value = self._pop_value(fr)
+                    mode = 2
+                    continue
+                if c == ")" and fr.kind == "p":
+                    i += 1
+                    stack.pop()
+                    value = self._pop_value(fr)
+                    mode = 2
+                    continue
+                if c == "}":
+                    if any(f.kind == "o" for f in stack[:-1]):
+                        stack.pop()
+                        value = self._pop_value(fr)
+                        mode = 2
+                    else:
+                        # stray closer inside an array is junk
+                        i += 1
+                    continue
+                if c == ":" and fr.container:
+                    i += 1
+                    key = fr.container.pop()
+                    obj = {}
+                    nf = _Frame("o", obj)
+                    nf.key = key if isinstance(key, str) else _to_key(key)
+                    fr.container.append(obj)
+                    nf.eager = True
+                    stack.append(nf)
+                    mode = 1
+                    continue
+                if c == ";":
+                    i += 1
+                    mode = 1
+                    continue
+                mode = 1
+                continue
+
+            if mode == 2:
+                # ------------------------------------------- have a value
+                if not stack:
+                    if value is not SKIP and isinstance(value, str):
+                        # `"key": ...` — a headless object body
+                        j = i
+                        while True:
+                            while j < n and s[j] in ws:
+                                j += 1
+                            if j >= n and not self.final:
+                                s = None
+                                yield
+                                s = self.s
+                                n = self.n
+                                continue
+                            break
+                        if j < n and s[j] == ":":
+                            nf = _Frame("o", {})
+                            nf.key = value
+                            stack.append(nf)
+                            value = SKIP
+                            i = j + 1
+                            mode = 1
+                            continue
+                    while wrapper_depth:
+                        # consume closing `)` / `;` of a wrapper call
+                        while True:
+                            while i < n and s[i] in ws:
+                                i += 1
+                            if i >= n and not self.final:
+                                s = None
+                                yield
+                                s = self.s
+                                n = self.n
+                                continue
+                            break
+                        if i < n and s[i] == ")":
+                            i += 1
+                        wrapper_depth -= 1
+                    if value is not SKIP:
+                        values.append(value)
+                        if isinstance(value, dict):
+                            # `}, "key": ...` — object continuation
+                            j = i
+                            while True:
+                                while j < n and s[j] in ws:
+                                    j += 1
+                                if j >= n and not self.final:
+                                    s = None
+                                    yield
+                                    s = self.s
+                                    n = self.n
+                                    continue
+                                break
+                            if j < n and s[j] == ",":
+                                j += 1
+                                while True:
+                                    while j < n and s[j] in ws:
+                                        j += 1
+                                    if j >= n and not self.final:
+                                        s = None
+                                        yield
+                                        s = self.s
+                                        n = self.n
+                                        continue
+                                    break
+                                ok = False
+                                if j < n and s[j] in quotes:
+                                    qc = _QUOTES[s[j]]
+                                    while True:
+                                        e = -1
+                                        for cc in qc:
+                                            f = s.find(cc, j + 1)
+                                            if f != -1 and (e == -1 or
+                                                            f < e):
+                                                e = f
+                                        if e == -1 and not self.final:
+                                            s = None
+                                            yield
+                                            s = self.s
+                                            n = self.n
+                                            continue
+                                        break
+                                    probe = e + 1 if e != -1 else -1
+                                elif j < n:
+                                    mm = word_re.match(s, j)
+                                    while mm and mm.end() >= n and \
+                                            not self.final:
+                                        s = None
+                                        yield
+                                        s = self.s
+                                        n = self.n
+                                        mm = word_re.match(s, j)
+                                    probe = mm.end() if mm else -1
+                                else:
+                                    probe = -1
+                                if probe != -1:
+                                    while True:
+                                        while probe < n and s[probe] in " \t":
+                                            probe += 1
+                                        if probe >= n and not self.final:
+                                            s = None
+                                            yield
+                                            s = self.s
+                                            n = self.n
+                                            continue
+                                        break
+                                    if probe < n and s[probe] == ":":
+                                        ok = True
+                                if ok:
+                                    values.pop()
+                                    stack.append(_Frame("o", value))
+                                    i = j
+                                    mode = 3
+                                    continue
+                    value = SKIP
+                    mode = 0
+                    continue
+                fr = stack[-1]
+                if fr.kind == "o":
+                    if value is not SKIP and fr.key is not None:
+                        fr.container[fr.key] = value
+                    fr.key = None
+                    value = SKIP
+                    mode = 4
+                    continue
+                if value is not SKIP:
+                    fr.container.append(value)
+                    value = SKIP
+                mode = 5
+                continue
+
             if mode == 0:
                 # ------------------------------------------- top level
                 if in_fence or c == "`":
@@ -406,17 +950,28 @@ class MendMachine:
                         break
                     i = j
                     continue
-                if c == "{":
+                if c == "{" or c == "[":
                     prose.clear()
-                    stack.append(_Frame("o", {}))
+                    if self.final and self._spec is not False:
+                        if self._spec or self._spec_ok():
+                            smode, payload, i2 = self._speculate(i)
+                            if smode == 2:
+                                value = payload
+                                i = i2
+                                mode = 2
+                                continue
+                            if smode:
+                                stack.append(payload)
+                                i = i2
+                                mode = smode
+                                continue
+                    if c == "{":
+                        stack.append(_Frame("o", {}))
+                        mode = 3
+                    else:
+                        stack.append(_Frame("a", []))
+                        mode = 1
                     i += 1
-                    mode = 3
-                    continue
-                if c == "[":
-                    prose.clear()
-                    stack.append(_Frame("a", []))
-                    i += 1
-                    mode = 1
                     continue
                 if c.isdigit() or c in "+-.−":
                     # `1. The user wants x.` — a numbered prose line is junk
@@ -575,394 +1130,6 @@ class MendMachine:
                 i += 1
                 continue
 
-            if mode == 1:
-                # --------------------------------------- expecting a value
-                in_obj = bool(stack) and stack[-1].kind == "o"
-                if at_eof:
-                    value = None if (in_obj and stack[-1].key is not None) \
-                        else SKIP
-                    mode = 2
-                    continue
-                if c == "{" or c == "[" or c == "(":
-                    child = {} if c == "{" else []
-                    nf = _Frame("o" if c == "{" else
-                                ("a" if c == "[" else "p"), child)
-                    if stack:
-                        par = stack[-1]
-                        if par.kind == "o":
-                            if par.key is not None:
-                                par.container[par.key] = child
-                                nf.eager = True
-                        else:
-                            par.container.append(child)
-                            nf.eager = True
-                    stack.append(nf)
-                    i += 1
-                    mode = 3 if c == "{" else 1
-                    continue
-                if c in "}],":
-                    value = None if (in_obj and stack[-1].key is not None) \
-                        else SKIP
-                    mode = 2
-                    continue
-                # ---- inline fast path: clean double-quoted string
-                if c == '"':
-                    j = s.find('"', i + 1)
-                    if j != -1 and j + 1 < n:
-                        d = s[j + 1]
-                        if (d in _STR_DELIMS or d in ws) and \
-                                s.find("\\", i + 1, j) == -1 and \
-                                s.find("\n", i + 1, j) == -1:
-                            if d in ws:
-                                # confirm next non-ws is a delimiter
-                                p = j + 1
-                                while p < n and s[p] in ws:
-                                    p += 1
-                                ok = (p >= n and self.final) or \
-                                     (p < n and s[p] in _STR_DELIMS)
-                            else:
-                                ok = True
-                            if ok:
-                                value = s[i + 1:j]
-                                i = j + 1
-                                mode = 2
-                                continue
-                # scalar (string / number / literal / unquoted)
-                ctx = _TOP if not stack else (
-                    _OVAL if stack[-1].kind == "o" else _ARR)
-                pos = i
-                s = None
-                value, i = yield from self._scalar(pos, ctx)
-                s = self.s
-                n = self.n
-                mode = 2
-                continue
-
-            if mode == 2:
-                # ------------------------------------------- have a value
-                if not stack:
-                    if value is not SKIP and isinstance(value, str):
-                        # `"key": ...` — a headless object body
-                        j = i
-                        while True:
-                            while j < n and s[j] in ws:
-                                j += 1
-                            if j >= n and not self.final:
-                                s = None
-                                yield
-                                s = self.s
-                                n = self.n
-                                continue
-                            break
-                        if j < n and s[j] == ":":
-                            nf = _Frame("o", {})
-                            nf.key = value
-                            stack.append(nf)
-                            value = SKIP
-                            i = j + 1
-                            mode = 1
-                            continue
-                    while wrapper_depth:
-                        # consume closing `)` / `;` of a wrapper call
-                        while True:
-                            while i < n and s[i] in ws:
-                                i += 1
-                            if i >= n and not self.final:
-                                s = None
-                                yield
-                                s = self.s
-                                n = self.n
-                                continue
-                            break
-                        if i < n and s[i] == ")":
-                            i += 1
-                        wrapper_depth -= 1
-                    if value is not SKIP:
-                        values.append(value)
-                        if isinstance(value, dict):
-                            # `}, "key": ...` — object continuation
-                            j = i
-                            while True:
-                                while j < n and s[j] in ws:
-                                    j += 1
-                                if j >= n and not self.final:
-                                    s = None
-                                    yield
-                                    s = self.s
-                                    n = self.n
-                                    continue
-                                break
-                            if j < n and s[j] == ",":
-                                j += 1
-                                while True:
-                                    while j < n and s[j] in ws:
-                                        j += 1
-                                    if j >= n and not self.final:
-                                        s = None
-                                        yield
-                                        s = self.s
-                                        n = self.n
-                                        continue
-                                    break
-                                ok = False
-                                if j < n and s[j] in quotes:
-                                    qc = _QUOTES[s[j]]
-                                    while True:
-                                        e = -1
-                                        for cc in qc:
-                                            f = s.find(cc, j + 1)
-                                            if f != -1 and (e == -1 or
-                                                            f < e):
-                                                e = f
-                                        if e == -1 and not self.final:
-                                            s = None
-                                            yield
-                                            s = self.s
-                                            n = self.n
-                                            continue
-                                        break
-                                    probe = e + 1 if e != -1 else -1
-                                elif j < n:
-                                    mm = word_re.match(s, j)
-                                    while mm and mm.end() >= n and \
-                                            not self.final:
-                                        s = None
-                                        yield
-                                        s = self.s
-                                        n = self.n
-                                        mm = word_re.match(s, j)
-                                    probe = mm.end() if mm else -1
-                                else:
-                                    probe = -1
-                                if probe != -1:
-                                    while True:
-                                        while probe < n and s[probe] in " \t":
-                                            probe += 1
-                                        if probe >= n and not self.final:
-                                            s = None
-                                            yield
-                                            s = self.s
-                                            n = self.n
-                                            continue
-                                        break
-                                    if probe < n and s[probe] == ":":
-                                        ok = True
-                                if ok:
-                                    values.pop()
-                                    stack.append(_Frame("o", value))
-                                    i = j
-                                    mode = 3
-                                    continue
-                    value = SKIP
-                    mode = 0
-                    continue
-                fr = stack[-1]
-                if fr.kind == "o":
-                    if value is not SKIP and fr.key is not None:
-                        fr.container[fr.key] = value
-                    fr.key = None
-                    value = SKIP
-                    mode = 4
-                    continue
-                if value is not SKIP:
-                    fr.container.append(value)
-                    value = SKIP
-                mode = 5
-                continue
-
-            if mode == 3:
-                # -------------------------------------- object expects key
-                fr = stack[-1]
-                if at_eof:
-                    stack.pop()
-                    value = self._pop_value(fr)
-                    mode = 2
-                    continue
-                if c == "}":
-                    i += 1
-                    stack.pop()
-                    value = self._pop_value(fr)
-                    mode = 2
-                    continue
-                if c == ",":
-                    i += 1
-                    continue
-                if c == "]":
-                    if not any(f.kind != "o" for f in stack[:-1]):
-                        i += 1
-                    stack.pop()
-                    value = self._pop_value(fr)
-                    mode = 2
-                    continue
-                if c == "[" and fr.container:
-                    # LLM split-array error: `"k": [...], [...]` — merge
-                    last_key = next(reversed(fr.container))
-                    if isinstance(fr.container[last_key], list):
-                        fr.key = last_key
-                        nf = _Frame("a", fr.container[last_key])
-                        nf.eager = True
-                        stack.append(nf)
-                        i += 1
-                        mode = 1
-                        continue
-                    stack.pop()
-                    value = self._pop_value(fr)
-                    mode = 2
-                    continue
-                if c == "{" or c == "[":
-                    stack.pop()
-                    value = self._pop_value(fr)
-                    mode = 2
-                    continue
-                if c == ")" and wrapper_depth:
-                    i += 1
-                    wrapper_depth -= 1
-                    continue
-                if c == ":":
-                    i += 1
-                    fr.key = None
-                    mode = 1
-                    continue
-                pos = i
-                s = None
-                key, i = yield from self._key(pos)
-                s = self.s
-                n = self.n
-                if key is SKIP:
-                    if i < n and s[i] not in "}]":
-                        i += 1
-                    continue
-                fr.key = key
-                while True:
-                    while i < n and s[i] in ws:
-                        i += 1
-                    if i >= n and not self.final:
-                        s = None
-                        yield
-                        s = self.s
-                        n = self.n
-                        continue
-                    break
-                if i < n and s[i] == '"':
-                    # stray quote between key and colon (`{""a"": 1}`)
-                    p = i + 1
-                    while True:
-                        while p < n and s[p] in ws:
-                            p += 1
-                        if p >= n and not self.final:
-                            s = None
-                            yield
-                            s = self.s
-                            n = self.n
-                            continue
-                        break
-                    if p < n and (s[p] == ":" or s[p] == "："):
-                        i = p
-                if i < n and (s[i] == ":" or s[i] == "："):
-                    i += 1
-                elif i < n and s[i] == "=":
-                    i += 1
-                    if i < n and s[i] == ">":
-                        i += 1
-                elif i >= n or s[i] in ",}":
-                    fr.container[key] = None
-                    fr.key = None
-                    mode = 4
-                    continue
-                mode = 1
-                continue
-
-            if mode == 4:
-                # ------------------------------------- object after member
-                fr = stack[-1]
-                if at_eof:
-                    stack.pop()
-                    value = self._pop_value(fr)
-                    mode = 2
-                    continue
-                if c == ",":
-                    i += 1
-                    mode = 3
-                    continue
-                if c == "}":
-                    i += 1
-                    stack.pop()
-                    value = self._pop_value(fr)
-                    mode = 2
-                    continue
-                if c == "]":
-                    if not any(f.kind != "o" for f in stack[:-1]):
-                        i += 1
-                    stack.pop()
-                    value = self._pop_value(fr)
-                    mode = 2
-                    continue
-                if c == ";":
-                    i += 1
-                    mode = 3
-                    continue
-                if c == ")" and wrapper_depth:
-                    i += 1
-                    wrapper_depth -= 1
-                    continue
-                if c == "{" or c == "[":
-                    stack.pop()
-                    value = self._pop_value(fr)
-                    mode = 2
-                    continue
-                mode = 3
-                continue
-
-            # mode == 5 ----------------------------------- array after item
-            fr = stack[-1]
-            if at_eof:
-                stack.pop()
-                value = self._pop_value(fr)
-                mode = 2
-                continue
-            if c == ",":
-                i += 1
-                mode = 1
-                continue
-            if c == "]":
-                i += 1
-                stack.pop()
-                value = self._pop_value(fr)
-                mode = 2
-                continue
-            if c == ")" and fr.kind == "p":
-                i += 1
-                stack.pop()
-                value = self._pop_value(fr)
-                mode = 2
-                continue
-            if c == "}":
-                if any(f.kind == "o" for f in stack[:-1]):
-                    stack.pop()
-                    value = self._pop_value(fr)
-                    mode = 2
-                else:
-                    # stray closer inside an array is junk
-                    i += 1
-                continue
-            if c == ":" and fr.container:
-                i += 1
-                key = fr.container.pop()
-                obj = {}
-                nf = _Frame("o", obj)
-                nf.key = key if isinstance(key, str) else _to_key(key)
-                fr.container.append(obj)
-                nf.eager = True
-                stack.append(nf)
-                mode = 1
-                continue
-            if c == ";":
-                i += 1
-                mode = 1
-                continue
-            mode = 1
-            continue
-
         # ----------------------------------------------------------- EOF
         while stack:
             fr = stack.pop()
@@ -993,6 +1160,95 @@ class MendMachine:
         else:
             self.result = SKIP
 
+
+    # ------------------------------------------------------------------
+
+    def _spec_ok(self):
+        """Decide once whether speculative raw_decode is semantically safe
+        for this input (no surrogate material anywhere)."""
+        s = self.s
+        if "\\ud" in s or "\\uD" in s:
+            ok = False
+        else:
+            try:
+                s.encode("utf-8")
+                ok = True
+            except UnicodeEncodeError:
+                ok = False
+        self._spec = ok
+        return ok
+
+    # ------------------------------------------------------------------
+
+    def _speculate(self, i):
+        """Try to parse a complete sub-value at C speed; on failure try to
+        salvage the longest clean prefix of the container.
+
+        Returns (mode, payload, new_i): mode 2 -> payload is a complete
+        value; mode 4/5 -> payload is a partially-filled frame to resume
+        (object/array); mode 0 -> speculation failed.
+        """
+        s = self.s
+        doom = self.doomed_from
+        if doom is not None and i <= doom:
+            # an enclosing attempt already failed past this point: a fresh
+            # raw_decode would rescan and fail at the same place
+            pos = doom
+        else:
+            try:
+                v, end = _SPEC_DECODER.raw_decode(s, i)
+                self._spec_fails = 0
+                return 2, v, end
+            except RecursionError:
+                self._spec_fails += 1
+                if self._spec_fails >= 8:
+                    self._spec = False
+                return 0, SKIP, i
+            except ValueError as e:
+                pos = getattr(e, "pos", None)
+                self._spec_fails += 1
+                if self._spec_fails >= 8:
+                    self._spec = False
+                if pos is None:
+                    return 0, SKIP, i
+                self.doomed_from = pos
+        # prefix salvage: a cut at a structural comma of *this* container
+        # is the only cut that parses cleanly (any cut inside a nested
+        # value leaves something unclosed), so a successful parse below
+        # is exactly machine-equivalent.  Failed attempts cost a full
+        # C scan, so only a few high-probability cut points are tried.
+        bound = min(pos, self.n)
+        if bound - i < 256:
+            return 0, SKIP, i
+        c = s[i]
+        closer = "}" if c == "{" else "]"
+        cands = []
+        for pat in ("},", "],", '",'):
+            k = s.rfind(pat, i, bound)
+            if k != -1:
+                cands.append(k + 1)
+        k = s.rfind(",", i, bound)
+        if k != -1 and k not in cands:
+            cands.append(k)
+        cands.sort(reverse=True)
+        need_brace = 1 if c == "{" else 0
+        need_brack = 1 - need_brace
+        for k in cands[:3]:
+            # cheap balance pre-filter before paying for a C parse
+            if s.count('"', i, k) % 2:
+                continue
+            if s.count("{", i, k) - s.count("}", i, k) != need_brace:
+                continue
+            if s.count("[", i, k) - s.count("]", i, k) != need_brack:
+                continue
+            try:
+                v = _SPEC_DECODER.decode(s[i:k] + closer)
+            except (ValueError, RecursionError):
+                continue
+            fr = _Frame("o" if c == "{" else "a", v)
+            self._spec_fails = 0
+            return (4 if c == "{" else 5), fr, k
+        return 0, SKIP, i
 
     # ------------------------------------------------------------------
 

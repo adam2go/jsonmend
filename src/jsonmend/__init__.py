@@ -28,7 +28,7 @@ __all__ = [
 ]
 
 
-def mend(text, *, strict=False):
+def mend(text, *, strict=False, _doom_hint=None):
     """Repair ``text`` and return the parsed Python value.
 
     This always runs the repair machine (no ``json.loads`` fast path).
@@ -39,8 +39,11 @@ def mend(text, *, strict=False):
         text = _coerce_text(text)
     if text and text[0] == "﻿":
         text = text.lstrip("﻿")
+        _doom_hint = None
     machine = MendMachine()
     machine.final = True
+    if _doom_hint is not None:
+        machine.doomed_from = _doom_hint
     machine.feed(text)
     result = machine.close()
     if result is SKIP:
@@ -61,8 +64,11 @@ def loads(json_str, *, skip_json_loads=False, strict=False, **_compat):
     if not skip_json_loads:
         try:
             return _json.loads(json_str)
-        except Exception:
-            pass
+        except Exception as e:
+            p = getattr(e, "pos", None)
+            if p is not None and p >= len(json_str):
+                # truncated input: the machine need not rescan the root
+                return mend(json_str, strict=strict, _doom_hint=p)
     return mend(json_str, strict=strict)
 
 
@@ -74,19 +80,28 @@ def repair_json(json_str="", return_objects=False, skip_json_loads=False,
     parameters.  Unlike json_repair, the output is always *valid* JSON:
     non-finite numbers (NaN/Infinity) are serialized as ``null``.
     """
+    if json_dumps_args.pop("logging", False):
+        raise TypeError(
+            "jsonmend does not support json_repair's logging=True "
+            "(incompatible with single-pass repair); remove the flag")
+    json_dumps_args.pop("stream_stable", None)  # Mender is always stable
     if not isinstance(json_str, str):
         json_str = _coerce_text(json_str)
     value = None
+    hint = None
     if not skip_json_loads:
         try:
             value = _json.loads(json_str)
             parsed = True
-        except Exception:
+        except Exception as e:
             parsed = False
+            p = getattr(e, "pos", None)
+            if p is not None and p >= len(json_str):
+                hint = p
     else:
         parsed = False
     if not parsed:
-        value = mend(json_str, strict=strict)
+        value = mend(json_str, strict=strict, _doom_hint=hint)
     if return_objects:
         return value
     return _dumps(value, ensure_ascii=ensure_ascii, **json_dumps_args)
