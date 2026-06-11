@@ -1,0 +1,13 @@
+{
+  "input": "{\"employees\":[\"John\", \"Anna\", \"Peter",
+  "verdict": "deterministic",
+  "rationale": "unterminated string keeps content, close all",
+  "source": "json_repair-tests",
+  "expected": {
+    "employees": [
+      "John",
+      "Anna",
+      "Peter"
+    ]
+  }
+}

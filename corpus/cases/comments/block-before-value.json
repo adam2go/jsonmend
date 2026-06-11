@@ -1,0 +1,9 @@
+{
+  "input": "{\"flag\":/*boolean*/true}",
+  "verdict": "deterministic",
+  "rationale": "comment between colon and value",
+  "source": "jsonrepair-tests",
+  "expected": {
+    "flag": true
+  }
+}

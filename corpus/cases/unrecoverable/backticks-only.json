@@ -1,0 +1,6 @@
+{
+  "input": "```",
+  "verdict": "unrecoverable",
+  "rationale": "an empty fence has no payload",
+  "source": "jsonmend"
+}

@@ -1,0 +1,9 @@
+{
+  "input": "I apologize for the confusion. The correct JSON is:\n```json\n{\"status\": \"ok\"}\n```",
+  "verdict": "deterministic",
+  "rationale": "apology preamble + fence",
+  "source": "jsonmend",
+  "expected": {
+    "status": "ok"
+  }
+}

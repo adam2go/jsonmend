@@ -1,0 +1,9 @@
+{
+  "input": "{\n  \"greeting\": 'hello' +\n 'world'\n}",
+  "verdict": "deterministic",
+  "rationale": "concatenation in a value",
+  "source": "jsonrepair-tests",
+  "expected": {
+    "greeting": "helloworld"
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "input": "{\"coords\": (1, 2), \"ok\": true}",
+  "verdict": "deterministic",
+  "rationale": "tuple values become arrays",
+  "source": "json_repair-tests",
+  "expected": {
+    "coords": [
+      1,
+      2
+    ],
+    "ok": true
+  }
+}

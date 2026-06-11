@@ -1,0 +1,9 @@
+{
+  "input": "{\"empty\": ()}",
+  "verdict": "deterministic",
+  "rationale": "empty tuple becomes empty array",
+  "source": "json_repair-tests",
+  "expected": {
+    "empty": []
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "input": "{greeting: hello world!}",
+  "verdict": "deterministic",
+  "rationale": "punctuation stays in bare values",
+  "source": "jsonrepair-tests",
+  "expected": {
+    "greeting": "hello world!"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "input": "{\"a\": 1} some trailing words",
+  "verdict": "deterministic",
+  "rationale": "prose after a structured value is junk",
+  "source": "jsonmend",
+  "expected": {
+    "a": 1
+  }
+}

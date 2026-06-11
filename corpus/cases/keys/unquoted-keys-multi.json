@@ -1,0 +1,10 @@
+{
+  "input": "{key:value,key2:value2}",
+  "verdict": "deterministic",
+  "rationale": "bare keys and bare values both quote",
+  "source": "json_repair-tests",
+  "expected": {
+    "key": "value",
+    "key2": "value2"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "input": "\"location\": \"Paris\", \"unit\": \"celsius\"}",
+  "verdict": "ambiguous",
+  "rationale": "an object body missing its opening brace",
+  "source": "jsonmend",
+  "accepted": [
+    {
+      "location": "Paris",
+      "unit": "celsius"
+    },
+    [
+      "location",
+      "Paris, \"unit\": \"celsius\""
+    ]
+  ]
+}

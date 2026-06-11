@@ -1,0 +1,9 @@
+{
+  "input": "{\"key\": \"apple \"bee\" carrot\"}",
+  "verdict": "deterministic",
+  "rationale": "unescaped quotes inside a string stay content when no structure follows them",
+  "source": "jsonrepair-tests",
+  "expected": {
+    "key": "apple \"bee\" carrot"
+  }
+}

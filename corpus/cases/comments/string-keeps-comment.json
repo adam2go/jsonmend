@@ -1,0 +1,9 @@
+{
+  "input": "[\"a\"/* foo */]",
+  "verdict": "deterministic",
+  "rationale": "comment directly after a string closes it",
+  "source": "jsonrepair-tests",
+  "expected": [
+    "a"
+  ]
+}

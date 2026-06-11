@@ -1,0 +1,9 @@
+{
+  "input": "{\"foo\":",
+  "verdict": "deterministic",
+  "rationale": "key with no value: null is the JSON notion of absent",
+  "source": "jsonrepair-tests",
+  "expected": {
+    "foo": null
+  }
+}

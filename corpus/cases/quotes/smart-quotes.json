@@ -1,0 +1,9 @@
+{
+  "input": "{“a”:“b”}",
+  "verdict": "deterministic",
+  "rationale": "curly quotes act as quotes",
+  "source": "jsonrepair-tests",
+  "expected": {
+    "a": "b"
+  }
+}

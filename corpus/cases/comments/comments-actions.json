@@ -1,0 +1,19 @@
+{
+  "input": "\n    {\n        \"Changes\": [\n            //object a\n            {\n                \"Action\": \"1\"\n            },\n            //object b ]\n            {\n                \"Action\": \"2\"\n            },\n            //object c ]\n            {\n                \"Action\": \"3\"\n            }\n        ]\n    }\n    ",
+  "verdict": "deterministic",
+  "rationale": "line comments with brackets between array items",
+  "source": "json_repair-tests",
+  "expected": {
+    "Changes": [
+      {
+        "Action": "1"
+      },
+      {
+        "Action": "2"
+      },
+      {
+        "Action": "3"
+      }
+    ]
+  }
+}

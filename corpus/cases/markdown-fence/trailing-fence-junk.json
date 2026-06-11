@@ -1,0 +1,14 @@
+{
+  "input": "{    \"a\": \"\",    \"b\": [ { \"c\": 1} ] \n}```",
+  "verdict": "deterministic",
+  "rationale": "stray fence after a value is junk",
+  "source": "json_repair-tests",
+  "expected": {
+    "a": "",
+    "b": [
+      {
+        "c": 1
+      }
+    ]
+  }
+}

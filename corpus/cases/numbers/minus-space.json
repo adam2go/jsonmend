@@ -1,0 +1,7 @@
+{
+  "input": "[- ",
+  "verdict": "deterministic",
+  "rationale": "a lone minus is nothing",
+  "source": "json_repair-tests",
+  "expected": []
+}

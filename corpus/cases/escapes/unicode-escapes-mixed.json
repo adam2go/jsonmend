@@ -1,0 +1,9 @@
+{
+  "input": "{\"key\": \"\\u0076\\u0061\\u006C\\u0075\\u0065\"}",
+  "verdict": "deterministic",
+  "rationale": "unicode escapes decode",
+  "source": "json_repair-tests",
+  "expected": {
+    "key": "value"
+  }
+}

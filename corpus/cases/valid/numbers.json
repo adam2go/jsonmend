@@ -1,0 +1,16 @@
+{
+  "input": "[23, 0, 0.0, -0, 2.3, 2300e3, 2e-3, -2]",
+  "verdict": "deterministic",
+  "rationale": "all RFC 8259 number forms",
+  "source": "jsonrepair-tests",
+  "expected": [
+    23,
+    0,
+    0.0,
+    0,
+    2.3,
+    2300000.0,
+    0.002,
+    -2
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "input": "[105,12",
+  "verdict": "deterministic",
+  "rationale": "truncated number array",
+  "source": "json_repair-tests",
+  "expected": [
+    105,
+    12
+  ]
+}

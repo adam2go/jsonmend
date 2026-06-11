@@ -1,0 +1,9 @@
+{
+  "input": "{\"text\": \"The quick brown fox won't jump\"}",
+  "verdict": "deterministic",
+  "rationale": "apostrophes inside double-quoted strings are content",
+  "source": "json_repair-tests",
+  "expected": {
+    "text": "The quick brown fox won't jump"
+  }
+}

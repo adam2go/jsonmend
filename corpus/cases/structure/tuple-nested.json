@@ -1,0 +1,16 @@
+{
+  "input": "((1, 2), (3, 4))",
+  "verdict": "deterministic",
+  "rationale": "nested tuples become arrays",
+  "source": "json_repair-tests",
+  "expected": [
+    [
+      1,
+      2
+    ],
+    [
+      3,
+      4
+    ]
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "input": "{\"key\":\"value\"}[1,2,3,true]",
+  "verdict": "deterministic",
+  "rationale": "multiple top-level values become an array",
+  "source": "json_repair-tests",
+  "expected": [
+    {
+      "key": "value"
+    },
+    [
+      1,
+      2,
+      3,
+      true
+    ]
+  ]
+}

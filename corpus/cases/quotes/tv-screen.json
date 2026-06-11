@@ -1,0 +1,7 @@
+{
+  "input": "\"The TV has a 24\" screen\"",
+  "verdict": "deterministic",
+  "rationale": "unescaped quote inside string is content",
+  "source": "jsonrepair-tests",
+  "expected": "The TV has a 24\" screen"
+}

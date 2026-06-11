@@ -1,0 +1,9 @@
+{
+  "input": "{ \"key\": \"x [0,2] f(-\\\\frac{3}{4})\" }",
+  "verdict": "deterministic",
+  "rationale": "LaTeX backslashes survive as content",
+  "source": "json_repair-tests",
+  "expected": {
+    "key": "x [0,2] f(-\\frac{3}{4})"
+  }
+}

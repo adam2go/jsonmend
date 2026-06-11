@@ -1,0 +1,13 @@
+{
+  "input": "[]{}",
+  "verdict": "ambiguous",
+  "rationale": "two top-level values: array of both, or the first",
+  "source": "json_repair-tests",
+  "accepted": [
+    [
+      [],
+      {}
+    ],
+    []
+  ]
+}

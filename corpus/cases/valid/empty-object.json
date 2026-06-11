@@ -1,0 +1,7 @@
+{
+  "input": "{}",
+  "verdict": "deterministic",
+  "rationale": "minimal object",
+  "source": "json_repair-tests",
+  "expected": {}
+}

@@ -1,0 +1,9 @@
+{
+  "input": "{\"n\": −5}",
+  "verdict": "deterministic",
+  "rationale": "U+2212 minus normalizes",
+  "source": "jsonmend",
+  "expected": {
+    "n": -5
+  }
+}

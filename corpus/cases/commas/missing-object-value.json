@@ -1,0 +1,10 @@
+{
+  "input": "{\"key\": value \"key2\" : \"value2\" ",
+  "verdict": "deterministic",
+  "rationale": "bare value then quoted key: comma implied",
+  "source": "json_repair-tests",
+  "expected": {
+    "key": "value",
+    "key2": "value2"
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "input": "{\"a\":2\n\"b\":3\nc:4}",
+  "verdict": "deterministic",
+  "rationale": "newline-separated members, mixed quoting",
+  "source": "jsonrepair-tests",
+  "expected": {
+    "a": 2,
+    "b": 3,
+    "c": 4
+  }
+}

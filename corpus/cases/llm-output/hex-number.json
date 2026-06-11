@@ -1,0 +1,14 @@
+{
+  "input": "{\"color\": 0xFF}",
+  "verdict": "ambiguous",
+  "rationale": "hex is not JSON: string (safe) or decoded int",
+  "source": "jsonmend",
+  "accepted": [
+    {
+      "color": "0xFF"
+    },
+    {
+      "color": 255
+    }
+  ]
+}

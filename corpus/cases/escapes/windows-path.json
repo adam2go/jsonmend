@@ -1,0 +1,9 @@
+{
+  "input": "{\"path\": \"C:\\\\Users\\\\test\"}",
+  "verdict": "deterministic",
+  "rationale": "escaped backslashes decode",
+  "source": "jsonmend",
+  "expected": {
+    "path": "C:\\Users\\test"
+  }
+}

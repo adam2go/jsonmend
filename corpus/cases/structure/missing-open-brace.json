@@ -1,0 +1,14 @@
+{
+  "input": "[{\"i\":1{\"i\":2}]",
+  "verdict": "deterministic",
+  "rationale": "a { at member position starts the next element",
+  "source": "jsonrepair-tests",
+  "expected": [
+    {
+      "i": 1
+    },
+    {
+      "i": 2
+    }
+  ]
+}

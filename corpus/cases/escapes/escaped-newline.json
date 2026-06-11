@@ -1,0 +1,7 @@
+{
+  "input": "\"first\\\nsecond\"",
+  "verdict": "deterministic",
+  "rationale": "backslash-newline is a line continuation",
+  "source": "jsonrepair-tests",
+  "expected": "first\nsecond"
+}

@@ -1,0 +1,11 @@
+{
+  "input": "[1,2,3,...]",
+  "verdict": "deterministic",
+  "rationale": "ellipsis placeholder drops",
+  "source": "json_repair-tests",
+  "expected": [
+    1,
+    2,
+    3
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "input": "Here is the tuple payload:\n\n```json\n(1, 2)\n```\n",
+  "verdict": "deterministic",
+  "rationale": "a parenthesized tuple inside a fence is an array",
+  "source": "json_repair-tests",
+  "expected": [
+    1,
+    2
+  ]
+}

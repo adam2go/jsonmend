@@ -1,0 +1,9 @@
+{
+  "input": "{\"\": \"value\"",
+  "verdict": "deterministic",
+  "rationale": "empty string is a legal key",
+  "source": "json_repair-tests",
+  "expected": {
+    "": "value"
+  }
+}

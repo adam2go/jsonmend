@@ -1,0 +1,16 @@
+{
+  "input": "{\"a\":,\"b\":2}",
+  "verdict": "ambiguous",
+  "rationale": "missing value: null (absent) or empty string",
+  "source": "jsonrepair-tests",
+  "accepted": [
+    {
+      "a": null,
+      "b": 2
+    },
+    {
+      "a": "",
+      "b": 2
+    }
+  ]
+}

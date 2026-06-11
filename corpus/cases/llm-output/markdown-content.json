@@ -1,0 +1,9 @@
+{
+  "input": "{\"md\": \"# Title\\n\\n- item 1\\n- item 2\"}",
+  "verdict": "deterministic",
+  "rationale": "markdown inside a string is content",
+  "source": "jsonmend",
+  "expected": {
+    "md": "# Title\n\n- item 1\n- item 2"
+  }
+}

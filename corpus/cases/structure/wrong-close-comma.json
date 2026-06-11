@@ -1,0 +1,9 @@
+{
+  "input": "{\"a\":2,]",
+  "verdict": "deterministic",
+  "rationale": "trailing comma + wrong closer",
+  "source": "jsonrepair-tests",
+  "expected": {
+    "a": 2
+  }
+}

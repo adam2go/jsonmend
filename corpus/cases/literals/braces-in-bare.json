@@ -1,0 +1,9 @@
+{
+  "input": "{text:words{words in brackets}more words}",
+  "verdict": "deterministic",
+  "rationale": "balanced braces inside bare values are content",
+  "source": "json_repair-tests",
+  "expected": {
+    "text": "words{words in brackets}more words"
+  }
+}

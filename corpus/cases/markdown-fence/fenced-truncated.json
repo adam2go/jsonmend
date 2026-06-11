@@ -1,0 +1,12 @@
+{
+  "input": "```json\n{\"items\": [1, 2",
+  "verdict": "deterministic",
+  "rationale": "fence + truncation compose",
+  "source": "jsonmend",
+  "expected": {
+    "items": [
+      1,
+      2
+    ]
+  }
+}

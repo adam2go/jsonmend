@@ -1,0 +1,10 @@
+{
+  "input": "{\"key\": \"value\"}, \"key2\": \"value2\"}",
+  "verdict": "deterministic",
+  "rationale": "a `}, \"key\":` continuation reopens the object",
+  "source": "json_repair-tests",
+  "expected": {
+    "key": "value",
+    "key2": "value2"
+  }
+}

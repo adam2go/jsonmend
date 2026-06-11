@@ -1,0 +1,9 @@
+{
+  "input": "{\"url\":\"https://www.bible.com/}",
+  "verdict": "deterministic",
+  "rationale": "unterminated URL string closed by structure",
+  "source": "jsonrepair-tests",
+  "expected": {
+    "url": "https://www.bible.com/"
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "input": "[ \"value\", /* comment */ \"value2\" ]",
+  "verdict": "deterministic",
+  "rationale": "block comment between elements",
+  "source": "json_repair-tests",
+  "expected": [
+    "value",
+    "value2"
+  ]
+}

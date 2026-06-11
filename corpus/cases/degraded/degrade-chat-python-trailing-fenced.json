@@ -1,0 +1,18 @@
+{
+  "input": "Here is the result:\n```json\n{\n  \"role\": \"assistant\",\n  \"content\": \"Sure thing\",\n  \"steps\": [1, 2, 3,],\n  \"done\": True,\n  \"score\": 0.87,\n  \"extra\": None,\n}\n```\n",
+  "verdict": "deterministic",
+  "rationale": "same degradation wrapped in prose + markdown fence",
+  "source": "jsonmend",
+  "expected": {
+    "role": "assistant",
+    "content": "Sure thing",
+    "steps": [
+      1,
+      2,
+      3
+    ],
+    "done": true,
+    "score": 0.87,
+    "extra": null
+  }
+}

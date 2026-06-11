@@ -1,0 +1,9 @@
+{
+  "input": "{\"key\": 10-20}",
+  "verdict": "deterministic",
+  "rationale": "ranges are not JSON numbers: keep as string",
+  "source": "json_repair-tests",
+  "expected": {
+    "key": "10-20"
+  }
+}

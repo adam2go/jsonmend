@@ -1,0 +1,7 @@
+{
+  "input": "{} /* foo ",
+  "verdict": "deterministic",
+  "rationale": "unclosed trailing comment",
+  "source": "jsonrepair-tests",
+  "expected": {}
+}

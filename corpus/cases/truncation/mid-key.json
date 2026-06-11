@@ -1,0 +1,9 @@
+{
+  "input": "{\"fo",
+  "verdict": "deterministic",
+  "rationale": "truncated key keeps its prefix, pairs with null",
+  "source": "jsonmend",
+  "expected": {
+    "fo": null
+  }
+}

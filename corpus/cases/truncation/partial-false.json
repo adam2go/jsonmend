@@ -1,0 +1,10 @@
+{
+  "input": "[true, fal",
+  "verdict": "deterministic",
+  "rationale": "at EOF a unique prefix of a literal completes it",
+  "source": "jsonmend",
+  "expected": [
+    true,
+    false
+  ]
+}

@@ -1,0 +1,7 @@
+{
+  "input": "(\"x\")",
+  "verdict": "deterministic",
+  "rationale": "a parenthesized scalar stays scalar",
+  "source": "json_repair-tests",
+  "expected": "x"
+}

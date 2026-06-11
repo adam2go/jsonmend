@@ -1,0 +1,14 @@
+{
+  "input": "[{\"key\":\"value\"}},{\"key\":\"value\"}]",
+  "verdict": "deterministic",
+  "rationale": "doubled closer between elements is junk",
+  "source": "json_repair-tests",
+  "expected": [
+    {
+      "key": "value"
+    },
+    {
+      "key": "value"
+    }
+  ]
+}

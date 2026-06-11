@@ -1,0 +1,9 @@
+{
+  "input": "{\"v\": 1.1.1}",
+  "verdict": "deterministic",
+  "rationale": "versions are not JSON numbers: keep as string",
+  "source": "json_repair-tests",
+  "expected": {
+    "v": "1.1.1"
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "input": "True",
+  "verdict": "deterministic",
+  "rationale": "bare Python literal",
+  "source": "jsonrepair-tests",
+  "expected": true
+}

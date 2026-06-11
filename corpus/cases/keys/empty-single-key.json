@@ -1,0 +1,9 @@
+{
+  "input": "{'': 1}",
+  "verdict": "deterministic",
+  "rationale": "empty single-quoted key",
+  "source": "json_repair-tests",
+  "expected": {
+    "": 1
+  }
+}

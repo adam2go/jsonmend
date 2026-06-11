@@ -1,0 +1,9 @@
+{
+  "input": "{\"foo\": \"\\\"bar\\\"\"",
+  "verdict": "deterministic",
+  "rationale": "escaped quotes inside string survive",
+  "source": "json_repair-tests",
+  "expected": {
+    "foo": "\"bar\""
+  }
+}

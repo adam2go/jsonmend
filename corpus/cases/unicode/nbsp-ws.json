@@ -1,0 +1,9 @@
+{
+  "input": "{\"a\": \"foo bar\"}",
+  "verdict": "deterministic",
+  "rationale": "NBSP is whitespace between tokens, content inside strings",
+  "source": "jsonrepair-tests",
+  "expected": {
+    "a": "foo bar"
+  }
+}

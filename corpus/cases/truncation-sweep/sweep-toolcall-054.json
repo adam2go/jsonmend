@@ -1,0 +1,13 @@
+{
+  "input": "{\"id\": \"call_8x2K\", \"type\": \"function\", \"function\": {\"",
+  "verdict": "deterministic",
+  "rationale": "prefix of a valid document cut at offset 54; expectation from the reference truncation-closing rules",
+  "source": "jsonmend",
+  "expected": {
+    "id": "call_8x2K",
+    "type": "function",
+    "function": {
+      "": null
+    }
+  }
+}

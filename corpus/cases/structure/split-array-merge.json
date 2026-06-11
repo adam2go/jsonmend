@@ -1,0 +1,22 @@
+{
+  "input": "{ \"key\": [\"a\"], [\"b\"], [\"c\"], \"key3\": \"value3\" }",
+  "verdict": "ambiguous",
+  "rationale": "stray arrays after an array member: merge into it, or drop",
+  "source": "json_repair-tests",
+  "accepted": [
+    {
+      "key": [
+        "a",
+        "b",
+        "c"
+      ],
+      "key3": "value3"
+    },
+    {
+      "key": [
+        "a"
+      ],
+      "key3": "value3"
+    }
+  ]
+}

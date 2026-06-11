@@ -1,0 +1,9 @@
+{
+  "input": "```\n{\"a\":\"b\"}\n",
+  "verdict": "deterministic",
+  "rationale": "unclosed fence: parse to EOF",
+  "source": "jsonrepair-tests",
+  "expected": {
+    "a": "b"
+  }
+}

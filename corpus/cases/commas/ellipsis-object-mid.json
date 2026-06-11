@@ -1,0 +1,11 @@
+{
+  "input": "{\"a\":2,\"b\":3,...,\"z\":26}",
+  "verdict": "deterministic",
+  "rationale": "mid-object ellipsis drops",
+  "source": "jsonrepair-tests",
+  "expected": {
+    "a": 2,
+    "b": 3,
+    "z": 26
+  }
+}

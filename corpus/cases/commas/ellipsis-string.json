@@ -1,0 +1,12 @@
+{
+  "input": "[1, 2, '...', 3]",
+  "verdict": "deterministic",
+  "rationale": "quoted ellipsis is content",
+  "source": "json_repair-tests",
+  "expected": [
+    1,
+    2,
+    "...",
+    3
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "input": "{\"text\": \"a\"}{\"text\": \"ab\"}{\"text\": \"abc\"}",
+  "verdict": "deterministic",
+  "rationale": "concatenated progressive snapshots become an array",
+  "source": "jsonmend",
+  "expected": [
+    {
+      "text": "a"
+    },
+    {
+      "text": "ab"
+    },
+    {
+      "text": "abc"
+    }
+  ]
+}

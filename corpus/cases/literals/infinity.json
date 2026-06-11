@@ -1,0 +1,16 @@
+{
+  "input": "[Infinity, -Infinity]",
+  "verdict": "ambiguous",
+  "rationale": "Infinity is not JSON: null or the string",
+  "source": "jsonmend",
+  "accepted": [
+    [
+      null,
+      null
+    ],
+    [
+      "Infinity",
+      "-Infinity"
+    ]
+  ]
+}

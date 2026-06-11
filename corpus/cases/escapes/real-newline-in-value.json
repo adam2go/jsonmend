@@ -1,0 +1,9 @@
+{
+  "input": "{\"text\": \"line1\nline2\"}",
+  "verdict": "deterministic",
+  "rationale": "raw newline inside a closed string is content",
+  "source": "jsonmend",
+  "expected": {
+    "text": "line1\nline2"
+  }
+}

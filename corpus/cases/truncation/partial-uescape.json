@@ -1,0 +1,9 @@
+{
+  "input": "{\"foo\":\"bar\\u20",
+  "verdict": "deterministic",
+  "rationale": "incomplete \\u escape is dropped from a truncated string",
+  "source": "jsonrepair-tests",
+  "expected": {
+    "foo": "bar"
+  }
+}

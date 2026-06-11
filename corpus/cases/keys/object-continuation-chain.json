@@ -1,0 +1,11 @@
+{
+  "input": "{\"key1\": \"value1\"}, \"key2\": \"value2\", \"key3\": \"value3\"}",
+  "verdict": "deterministic",
+  "rationale": "continuation chains",
+  "source": "json_repair-tests",
+  "expected": {
+    "key1": "value1",
+    "key2": "value2",
+    "key3": "value3"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "input": "{\"foo\"",
+  "verdict": "deterministic",
+  "rationale": "complete key, no colon: pair with null",
+  "source": "jsonrepair-tests",
+  "expected": {
+    "foo": null
+  }
+}

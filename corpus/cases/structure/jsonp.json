@@ -1,0 +1,7 @@
+{
+  "input": "callback_123({});",
+  "verdict": "deterministic",
+  "rationale": "JSONP wrapper strips",
+  "source": "jsonrepair-tests",
+  "expected": {}
+}

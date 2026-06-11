@@ -1,0 +1,9 @@
+{
+  "input": "{\"rowId\": 57eeeeb1-450b-482c-81b9-4be77e95dee2}",
+  "verdict": "deterministic",
+  "rationale": "uuid-like bare tokens become strings",
+  "source": "json_repair-tests",
+  "expected": {
+    "rowId": "57eeeeb1-450b-482c-81b9-4be77e95dee2"
+  }
+}

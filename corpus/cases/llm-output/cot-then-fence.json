@@ -1,0 +1,9 @@
+{
+  "input": "Let me think step by step.\n1. The user wants x.\n2. Therefore:\n```json\n{\"x\": true}\n```\nDone!",
+  "verdict": "deterministic",
+  "rationale": "chain-of-thought lines then a fenced value",
+  "source": "jsonmend",
+  "expected": {
+    "x": true
+  }
+}

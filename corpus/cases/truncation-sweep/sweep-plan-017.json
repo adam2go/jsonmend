@@ -1,0 +1,13 @@
+{
+  "input": "{\"plan\": [{\"step\"",
+  "verdict": "deterministic",
+  "rationale": "prefix of a valid document cut at offset 17; expectation from the reference truncation-closing rules",
+  "source": "jsonmend",
+  "expected": {
+    "plan": [
+      {
+        "step": null
+      }
+    ]
+  }
+}

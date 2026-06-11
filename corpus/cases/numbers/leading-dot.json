@@ -1,0 +1,9 @@
+{
+  "input": "{\"key\": .25}",
+  "verdict": "deterministic",
+  "rationale": "bare leading-dot fraction",
+  "source": "json_repair-tests",
+  "expected": {
+    "key": 0.25
+  }
+}

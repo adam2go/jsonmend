@@ -1,0 +1,7 @@
+{
+  "input": "0.0.1",
+  "verdict": "deterministic",
+  "rationale": "versions are not JSON numbers: keep as string",
+  "source": "jsonrepair-tests",
+  "expected": "0.0.1"
+}

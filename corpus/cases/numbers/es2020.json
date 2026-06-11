@@ -1,0 +1,10 @@
+{
+  "input": "ES2020",
+  "verdict": "ambiguous",
+  "rationale": "letters+digits is a bare word",
+  "source": "jsonrepair-tests",
+  "accepted": [
+    "ES2020",
+    ""
+  ]
+}

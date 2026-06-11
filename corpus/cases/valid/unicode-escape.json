@@ -1,0 +1,7 @@
+{
+  "input": "\"\\u2605\"",
+  "verdict": "deterministic",
+  "rationale": "unicode escape decodes",
+  "source": "jsonrepair-tests",
+  "expected": "★"
+}

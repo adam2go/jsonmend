@@ -1,0 +1,9 @@
+{
+  "input": "{url:https://www.bible.com/}",
+  "verdict": "deterministic",
+  "rationale": "URLs survive bare (no // comment confusion)",
+  "source": "jsonrepair-tests",
+  "expected": {
+    "url": "https://www.bible.com/"
+  }
+}

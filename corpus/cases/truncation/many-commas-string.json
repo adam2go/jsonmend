@@ -1,0 +1,9 @@
+{
+  "input": "{\"message\": \"with, multiple, commma's, you see?",
+  "verdict": "deterministic",
+  "rationale": "EOF inside a string keeps everything",
+  "source": "jsonrepair-tests",
+  "expected": {
+    "message": "with, multiple, commma's, you see?"
+  }
+}

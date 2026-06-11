@@ -1,0 +1,9 @@
+{
+  "input": "{'key': 'va\\'lue'}",
+  "verdict": "deterministic",
+  "rationale": "escapes work inside single-quoted strings",
+  "source": "json_repair-tests",
+  "expected": {
+    "key": "va'lue"
+  }
+}

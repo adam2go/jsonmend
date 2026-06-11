@@ -1,0 +1,10 @@
+{
+  "input": "好的，这是您要的 JSON：\n```json\n{\"城市\": \"北京\", \"人口\": 2154}\n```",
+  "verdict": "deterministic",
+  "rationale": "CJK preamble + CJK content",
+  "source": "jsonmend",
+  "expected": {
+    "城市": "北京",
+    "人口": 2154
+  }
+}

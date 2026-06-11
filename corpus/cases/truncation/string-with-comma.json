@@ -1,0 +1,9 @@
+{
+  "input": "{\"text\":\"Hello Sergey,I hop",
+  "verdict": "deterministic",
+  "rationale": "EOF inside a string keeps everything: no comma splitting at EOF",
+  "source": "jsonrepair-tests",
+  "expected": {
+    "text": "Hello Sergey,I hop"
+  }
+}

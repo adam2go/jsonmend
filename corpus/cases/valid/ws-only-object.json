@@ -1,0 +1,7 @@
+{
+  "input": "   {  }   ",
+  "verdict": "deterministic",
+  "rationale": "surrounding whitespace is ignored",
+  "source": "json_repair-tests",
+  "expected": {}
+}

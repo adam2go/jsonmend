@@ -1,0 +1,10 @@
+{
+  "input": "\"",
+  "verdict": "ambiguous",
+  "rationale": "an opened empty string: empty string, or nothing mendable",
+  "source": "json_repair-tests",
+  "accepted": [
+    "",
+    null
+  ]
+}

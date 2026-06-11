@@ -1,0 +1,7 @@
+{
+  "input": "\"hello\" +\n \" world\"",
+  "verdict": "deterministic",
+  "rationale": "concatenation across newlines",
+  "source": "jsonrepair-tests",
+  "expected": "hello world"
+}

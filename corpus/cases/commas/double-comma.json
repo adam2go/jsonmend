@@ -1,0 +1,10 @@
+{
+  "input": "[1,,2]",
+  "verdict": "deterministic",
+  "rationale": "empty slots collapse",
+  "source": "jsonmend",
+  "expected": [
+    1,
+    2
+  ]
+}

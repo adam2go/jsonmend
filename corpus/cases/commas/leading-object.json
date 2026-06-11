@@ -1,0 +1,9 @@
+{
+  "input": "{,\"message\": \"hi\"}",
+  "verdict": "deterministic",
+  "rationale": "leading comma drops",
+  "source": "jsonrepair-tests",
+  "expected": {
+    "message": "hi"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "input": "**Decision**: bla, bla (some clarification):\n\n```json\n{\n  \"key\": \"value\"\n}\n```\n",
+  "verdict": "deterministic",
+  "rationale": "parenthesized prose must not hijack the fenced payload",
+  "source": "json_repair-tests",
+  "expected": {
+    "key": "value"
+  }
+}

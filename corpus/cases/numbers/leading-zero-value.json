@@ -1,0 +1,9 @@
+{
+  "input": "{value:0789}",
+  "verdict": "deterministic",
+  "rationale": "leading-zero numbers keep as string",
+  "source": "jsonrepair-tests",
+  "expected": {
+    "value": "0789"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "input": "# comment\n# comment\n# comment\n# comment\n# comment\n# comment\n# comment\n# comment\n# comment\n# comment\n# comment\n# comment\n# comment\n# comment\n# comment\n# comment\n# comment\n# comment\n# comment\n# comment\n# comment\n# comment\n# comment\n# comment\n# comment\n# comment\n# comment\n# comment\n# comment\n# comment\n# comment\n# comment\n# comment\n# comment\n# comment\n# comment\n# comment\n# comment\n# comment\n# comment\n# comment\n# comment\n# comment\n# comment\n# comment\n# comment\n# comment\n# comment\n# comment\n# comment\n{\"key\": \"value\"}",
+  "verdict": "deterministic",
+  "rationale": "many leading comment lines must not recurse",
+  "source": "json_repair-tests",
+  "expected": {
+    "key": "value"
+  }
+}

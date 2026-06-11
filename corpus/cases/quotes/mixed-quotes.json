@@ -1,0 +1,9 @@
+{
+  "input": "{\"a\":'foo'}",
+  "verdict": "deterministic",
+  "rationale": "mixed quote styles normalize",
+  "source": "jsonrepair-tests",
+  "expected": {
+    "a": "foo"
+  }
+}

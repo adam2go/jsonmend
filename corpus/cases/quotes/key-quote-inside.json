@@ -1,0 +1,9 @@
+{
+  "input": "{\"k\"e\"y\": \"value\"}",
+  "verdict": "deterministic",
+  "rationale": "unescaped quotes inside a key are content",
+  "source": "json_repair-tests",
+  "expected": {
+    "k\"e\"y": "value"
+  }
+}

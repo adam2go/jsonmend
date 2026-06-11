@@ -1,0 +1,9 @@
+{
+  "input": "{\"ok\": tru",
+  "verdict": "deterministic",
+  "rationale": "at EOF a unique prefix of a literal completes it",
+  "source": "jsonmend",
+  "expected": {
+    "ok": true
+  }
+}

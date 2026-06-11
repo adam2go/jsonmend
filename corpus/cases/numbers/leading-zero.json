@@ -1,0 +1,7 @@
+{
+  "input": "0789",
+  "verdict": "deterministic",
+  "rationale": "leading-zero numbers are not JSON: keep as string (ZIP codes!)",
+  "source": "jsonrepair-tests",
+  "expected": "0789"
+}

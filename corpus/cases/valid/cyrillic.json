@@ -1,0 +1,7 @@
+{
+  "input": "\"йнформация\"",
+  "verdict": "deterministic",
+  "rationale": "BMP unicode content",
+  "source": "jsonrepair-tests",
+  "expected": "йнформация"
+}

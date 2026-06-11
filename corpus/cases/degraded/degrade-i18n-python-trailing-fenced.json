@@ -1,0 +1,17 @@
+{
+  "input": "Here is the result:\n```json\n{\n  \"city\": \"北京\",\n  \"name\": \"café\",\n  \"emoji\": \"🎉\",\n  \"langs\": [\"中文\", \"Français\", \"Русский\",],\n  \"count\": 3,\n}\n```\n",
+  "verdict": "deterministic",
+  "rationale": "same degradation wrapped in prose + markdown fence",
+  "source": "jsonmend",
+  "expected": {
+    "city": "北京",
+    "name": "café",
+    "emoji": "🎉",
+    "langs": [
+      "中文",
+      "Français",
+      "Русский"
+    ],
+    "count": 3
+  }
+}

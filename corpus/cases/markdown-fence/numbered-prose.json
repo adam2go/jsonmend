@@ -1,0 +1,9 @@
+{
+  "input": "(1) Keep this note in the explanation.\n\n```json\n{\n  \"key\": \"value\"\n}\n```\n",
+  "verdict": "deterministic",
+  "rationale": "numbered prose must not hijack the fenced payload",
+  "source": "json_repair-tests",
+  "expected": {
+    "key": "value"
+  }
+}

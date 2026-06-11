@@ -1,0 +1,9 @@
+{
+  "input": "{regex: /standalone-styles.css/}",
+  "verdict": "deterministic",
+  "rationale": "regex literals become strings",
+  "source": "jsonrepair-tests",
+  "expected": {
+    "regex": "/standalone-styles.css/"
+  }
+}

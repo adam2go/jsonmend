@@ -1,0 +1,7 @@
+{
+  "input": "\"a\"+\"b\"+\"c\"",
+  "verdict": "deterministic",
+  "rationale": "chained concatenation evaluates",
+  "source": "jsonrepair-tests",
+  "expected": "abc"
+}

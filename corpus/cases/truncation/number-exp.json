@@ -1,0 +1,7 @@
+{
+  "input": "2e",
+  "verdict": "deterministic",
+  "rationale": "complete the exponent with 0",
+  "source": "jsonrepair-tests",
+  "expected": 2.0
+}

@@ -1,0 +1,10 @@
+{
+  "input": "[\n\"abc,\n\"def\"\n]",
+  "verdict": "deterministic",
+  "rationale": "a quote opening the next line closes the unterminated string at the newline; its trailing comma is the separator",
+  "source": "jsonrepair-tests",
+  "expected": [
+    "abc",
+    "def"
+  ]
+}

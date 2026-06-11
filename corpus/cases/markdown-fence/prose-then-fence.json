@@ -1,0 +1,9 @@
+{
+  "input": "Based on the information extracted, here is the filled JSON output: ```json { 'a': 'b' } ```",
+  "verdict": "deterministic",
+  "rationale": "prose before a fence is junk",
+  "source": "json_repair-tests",
+  "expected": {
+    "a": "b"
+  }
+}

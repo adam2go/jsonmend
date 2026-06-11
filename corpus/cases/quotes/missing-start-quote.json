@@ -1,0 +1,7 @@
+{
+  "input": "abc\"",
+  "verdict": "deterministic",
+  "rationale": "stray trailing quote: the text is the string",
+  "source": "jsonrepair-tests",
+  "expected": "abc"
+}

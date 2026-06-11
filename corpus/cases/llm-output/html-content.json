@@ -1,0 +1,9 @@
+{
+  "input": "{\"html\": \"<div class=\\\"box\\\">hi</div>\"}",
+  "verdict": "deterministic",
+  "rationale": "escaped HTML survives",
+  "source": "jsonmend",
+  "expected": {
+    "html": "<div class=\"box\">hi</div>"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "input": "{\"a\":2]",
+  "verdict": "deterministic",
+  "rationale": "] closes an object when no array is open",
+  "source": "jsonrepair-tests",
+  "expected": {
+    "a": 2
+  }
+}

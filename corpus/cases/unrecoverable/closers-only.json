@@ -1,0 +1,6 @@
+{
+  "input": "}}]]",
+  "verdict": "unrecoverable",
+  "rationale": "closers alone carry no value",
+  "source": "jsonmend"
+}

@@ -1,0 +1,9 @@
+{
+  "input": "{\"text\": \"She said:",
+  "verdict": "deterministic",
+  "rationale": "colon at end of truncated string is content",
+  "source": "jsonrepair-tests",
+  "expected": {
+    "text": "She said:"
+  }
+}

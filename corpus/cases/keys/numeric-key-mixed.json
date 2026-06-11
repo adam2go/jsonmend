@@ -1,0 +1,10 @@
+{
+  "input": "{\"key\": \"value\", 5: \"value\"}",
+  "verdict": "deterministic",
+  "rationale": "non-string keys stringify",
+  "source": "json_repair-tests",
+  "expected": {
+    "key": "value",
+    "5": "value"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "input": "{\"foo\": \"bar",
+  "verdict": "deterministic",
+  "rationale": "unterminated string keeps its content",
+  "source": "jsonrepair-tests",
+  "expected": {
+    "foo": "bar"
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "input": "\"\\x41\"",
+  "verdict": "ambiguous",
+  "rationale": "\\x is not JSON: drop backslash, decode as hex, or keep",
+  "source": "jsonmend",
+  "accepted": [
+    "x41",
+    "A",
+    "\\x41"
+  ]
+}

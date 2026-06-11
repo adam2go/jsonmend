@@ -1,0 +1,14 @@
+{
+  "input": "{\"id\": \"call_8x2K\", \"type\": \"function\", \"function\": {\"name\": \"get_weather\", \"arguments\": \"{\\\"city\\\": \\\"San Francisco\\\", \\\"unit",
+  "verdict": "deterministic",
+  "rationale": "prefix of a valid document cut at offset 126; expectation from the reference truncation-closing rules",
+  "source": "jsonmend",
+  "expected": {
+    "id": "call_8x2K",
+    "type": "function",
+    "function": {
+      "name": "get_weather",
+      "arguments": "{\"city\": \"San Francisco\", \"unit"
+    }
+  }
+}

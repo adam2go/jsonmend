@@ -1,0 +1,9 @@
+{
+  "input": "Here you go 🎉\n{\"done\": true}",
+  "verdict": "deterministic",
+  "rationale": "emoji in the preamble is junk",
+  "source": "jsonmend",
+  "expected": {
+    "done": true
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "input": "   \n\t  ",
+  "verdict": "unrecoverable",
+  "rationale": "nothing to mend",
+  "source": "jsonmend"
+}

@@ -1,0 +1,9 @@
+{
+  "input": "{\"key:\"value\"}",
+  "verdict": "deterministic",
+  "rationale": "quote after colon belongs to the value",
+  "source": "json_repair-tests",
+  "expected": {
+    "key": "value"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "input": "```{\"a\":\"b\"}```",
+  "verdict": "deterministic",
+  "rationale": "fences without newlines",
+  "source": "jsonrepair-tests",
+  "expected": {
+    "a": "b"
+  }
+}

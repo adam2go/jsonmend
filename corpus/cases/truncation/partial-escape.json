@@ -1,0 +1,9 @@
+{
+  "input": "{\"key\": \"val\\",
+  "verdict": "deterministic",
+  "rationale": "dangling backslash is dropped from a truncated string",
+  "source": "json_repair-tests",
+  "expected": {
+    "key": "val"
+  }
+}

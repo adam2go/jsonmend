@@ -1,0 +1,9 @@
+{
+  "input": "{'b': True}",
+  "verdict": "deterministic",
+  "rationale": "Python booleans",
+  "source": "json_repair-tests",
+  "expected": {
+    "b": true
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "input": "\"/* foo */\"",
+  "verdict": "deterministic",
+  "rationale": "comment syntax inside a string is content",
+  "source": "jsonrepair-tests",
+  "expected": "/* foo */"
+}

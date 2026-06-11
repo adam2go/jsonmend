@@ -1,0 +1,7 @@
+{
+  "input": "2e3.4",
+  "verdict": "deterministic",
+  "rationale": "malformed numbers keep as string",
+  "source": "jsonrepair-tests",
+  "expected": "2e3.4"
+}

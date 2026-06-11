@@ -1,0 +1,14 @@
+{
+  "input": "{\"array\":[{\"key\": \"value\"], \"key2\": \"value2\"}",
+  "verdict": "deterministic",
+  "rationale": "] closes both the inner object and the array",
+  "source": "json_repair-tests",
+  "expected": {
+    "array": [
+      {
+        "key": "value"
+      }
+    ],
+    "key2": "value2"
+  }
+}

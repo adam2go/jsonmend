@@ -1,0 +1,10 @@
+{
+  "input": "[https://www.bible.com/,2]",
+  "verdict": "deterministic",
+  "rationale": "URLs survive bare in arrays",
+  "source": "jsonrepair-tests",
+  "expected": [
+    "https://www.bible.com/",
+    2
+  ]
+}

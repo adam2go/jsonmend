@@ -1,0 +1,9 @@
+{
+  "input": "{\"key\t_\": \"value\"}",
+  "verdict": "deterministic",
+  "rationale": "raw tab inside a key is content",
+  "source": "json_repair-tests",
+  "expected": {
+    "key\t_": "value"
+  }
+}

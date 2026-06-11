@@ -1,0 +1,14 @@
+{
+  "input": "{\"key_1\\n\": \"value\"}",
+  "verdict": "ambiguous",
+  "rationale": "raw newline in key: strip it or keep it escaped",
+  "source": "json_repair-tests",
+  "accepted": [
+    {
+      "key_1": "value"
+    },
+    {
+      "key_1\n": "value"
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "input": "{'key': \"{\\\"key\\\": 1, \\\"key2\\\": 1}\"}",
+  "verdict": "deterministic",
+  "rationale": "escaped JSON inside a string stays a string",
+  "source": "json_repair-tests",
+  "expected": {
+    "key": "{\"key\": 1, \"key2\": 1}"
+  }
+}

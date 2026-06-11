@@ -1,0 +1,10 @@
+{
+  "input": "{\"a\": 1,\r\n\"b\": 2}",
+  "verdict": "deterministic",
+  "rationale": "CRLF line endings are whitespace",
+  "source": "jsonmend",
+  "expected": {
+    "a": 1,
+    "b": 2
+  }
+}

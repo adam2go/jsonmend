@@ -1,0 +1,13 @@
+{
+  "input": "{\"key\": [\"value\" \"value1\" \"value2\"]}",
+  "verdict": "deterministic",
+  "rationale": "quote-to-quote adjacency implies commas",
+  "source": "json_repair-tests",
+  "expected": {
+    "key": [
+      "value",
+      "value1",
+      "value2"
+    ]
+  }
+}

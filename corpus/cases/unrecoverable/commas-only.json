@@ -1,0 +1,6 @@
+{
+  "input": ",,,",
+  "verdict": "unrecoverable",
+  "rationale": "separators alone carry no value",
+  "source": "jsonmend"
+}

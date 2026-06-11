@@ -1,0 +1,12 @@
+{
+  "input": "{ \"key\": { \"key2\": \"value2\" // comment\n}, \"key3\": \"value3\" }",
+  "verdict": "deterministic",
+  "rationale": "// comment runs to end of line",
+  "source": "json_repair-tests",
+  "expected": {
+    "key": {
+      "key2": "value2"
+    },
+    "key3": "value3"
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "input": "{\"key\": 1e }",
+  "verdict": "ambiguous",
+  "rationale": "dangling exponent: complete with e0",
+  "source": "json_repair-tests",
+  "accepted": [
+    {
+      "key": 1.0
+    },
+    {
+      "key": 1
+    }
+  ]
+}

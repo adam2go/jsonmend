@@ -1,0 +1,20 @@
+{
+  "input": "Here is the result:\n```json\n{\n  \"server\": {\n    \"host\": \"api.example.com\",\n    \"port\": 8443,\n    \"tls\": True\n  },\n  \"retries\": 3,\n  \"timeout\": 2.5,\n  \"tags\": [\"prod\", \"eu-west\"],\n  \"fallback\": None\n}\n```\n",
+  "verdict": "deterministic",
+  "rationale": "same degradation wrapped in prose + markdown fence",
+  "source": "jsonmend",
+  "expected": {
+    "server": {
+      "host": "api.example.com",
+      "port": 8443,
+      "tls": true
+    },
+    "retries": 3,
+    "timeout": 2.5,
+    "tags": [
+      "prod",
+      "eu-west"
+    ],
+    "fallback": null
+  }
+}

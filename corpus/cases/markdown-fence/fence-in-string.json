@@ -1,0 +1,9 @@
+{
+  "input": "{\"key\": \"```json\"",
+  "verdict": "deterministic",
+  "rationale": "backticks inside a string are content",
+  "source": "json_repair-tests",
+  "expected": {
+    "key": "```json"
+  }
+}

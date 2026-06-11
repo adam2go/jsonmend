@@ -1,0 +1,9 @@
+{
+  "input": "{\"foo\": \"bar\"",
+  "verdict": "deterministic",
+  "rationale": "close the object",
+  "source": "jsonrepair-tests",
+  "expected": {
+    "foo": "bar"
+  }
+}

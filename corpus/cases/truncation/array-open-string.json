@@ -1,0 +1,9 @@
+{
+  "input": "[\"foo",
+  "verdict": "deterministic",
+  "rationale": "close string and array",
+  "source": "jsonrepair-tests",
+  "expected": [
+    "foo"
+  ]
+}

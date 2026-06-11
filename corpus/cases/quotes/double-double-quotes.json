@@ -1,0 +1,14 @@
+{
+  "input": "{\"\"answer\"\":[{\"\"traits\"\":''Female aged 60+'',\"\"answer1\"\":\"\"5\"\"}]}",
+  "verdict": "deterministic",
+  "rationale": "doubled quotes collapse",
+  "source": "json_repair-tests",
+  "expected": {
+    "answer": [
+      {
+        "traits": "Female aged 60+",
+        "answer1": "5"
+      }
+    ]
+  }
+}

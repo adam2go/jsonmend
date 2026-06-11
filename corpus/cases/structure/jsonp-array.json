@@ -1,0 +1,10 @@
+{
+  "input": "callback_123([1,2]);",
+  "verdict": "deterministic",
+  "rationale": "JSONP wrapper strips",
+  "source": "jsonrepair-tests",
+  "expected": [
+    1,
+    2
+  ]
+}

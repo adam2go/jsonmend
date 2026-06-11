@@ -1,0 +1,10 @@
+{
+  "input": "{\"a\": 1,\r\"b\": 2}",
+  "verdict": "deterministic",
+  "rationale": "lone CR is whitespace",
+  "source": "jsonmend",
+  "expected": {
+    "a": 1,
+    "b": 2
+  }
+}

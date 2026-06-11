@@ -1,0 +1,7 @@
+{
+  "input": "2.",
+  "verdict": "deterministic",
+  "rationale": "complete the fraction with 0",
+  "source": "jsonrepair-tests",
+  "expected": 2.0
+}

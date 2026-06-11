@@ -1,0 +1,14 @@
+{
+  "input": "{\"mood\": 🎉}",
+  "verdict": "ambiguous",
+  "rationale": "bare emoji value: string or unparseable",
+  "source": "jsonmend",
+  "accepted": [
+    {
+      "mood": "🎉"
+    },
+    {
+      "mood": ""
+    }
+  ]
+}

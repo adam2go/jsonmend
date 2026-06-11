@@ -1,0 +1,7 @@
+{
+  "input": "[...]",
+  "verdict": "deterministic",
+  "rationale": "only ellipsis: empty array",
+  "source": "jsonrepair-tests",
+  "expected": []
+}

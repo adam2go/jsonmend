@@ -1,0 +1,9 @@
+{
+  "input": "{\"city\": New York}",
+  "verdict": "deterministic",
+  "rationale": "bare multi-word value quotes whole",
+  "source": "json_repair-tests",
+  "expected": {
+    "city": "New York"
+  }
+}

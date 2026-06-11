@@ -1,0 +1,9 @@
+{
+  "input": "{\"key\": \"\"",
+  "verdict": "deterministic",
+  "rationale": "value already complete: close object",
+  "source": "json_repair-tests",
+  "expected": {
+    "key": ""
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "input": "\"hello\" + \" world\"",
+  "verdict": "deterministic",
+  "rationale": "JS string concatenation evaluates",
+  "source": "jsonrepair-tests",
+  "expected": "hello world"
+}

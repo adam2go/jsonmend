@@ -1,0 +1,12 @@
+{
+  "input": "The top items are:\n\n1. first\n2. second\n\n{\"items\": [\"first\", \"second\"]}",
+  "verdict": "deterministic",
+  "rationale": "numbered prose lines before the value are junk",
+  "source": "jsonmend",
+  "expected": {
+    "items": [
+      "first",
+      "second"
+    ]
+  }
+}

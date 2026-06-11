@@ -1,0 +1,12 @@
+{
+  "input": "{\"array\": [\n\"a\"\n\"b\"\n]}",
+  "verdict": "deterministic",
+  "rationale": "newline-separated string items",
+  "source": "jsonrepair-tests",
+  "expected": {
+    "array": [
+      "a",
+      "b"
+    ]
+  }
+}

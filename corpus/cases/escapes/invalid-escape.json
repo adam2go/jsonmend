@@ -1,0 +1,7 @@
+{
+  "input": "\"\\a\"",
+  "verdict": "deterministic",
+  "rationale": "unknown escape: drop the backslash, keep the char",
+  "source": "jsonrepair-tests",
+  "expected": "a"
+}

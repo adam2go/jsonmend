@@ -1,0 +1,10 @@
+{
+  "input": "{\n  \"firstName\": \"John\"\n  lastName: Smith",
+  "verdict": "deterministic",
+  "rationale": "missing comma + bare key + bare value + truncation",
+  "source": "jsonrepair-tests",
+  "expected": {
+    "firstName": "John",
+    "lastName": "Smith"
+  }
+}

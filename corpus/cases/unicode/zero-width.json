@@ -1,0 +1,9 @@
+{
+  "input": "{\"a\":​\"foo\"}",
+  "verdict": "deterministic",
+  "rationale": "zero-width space between tokens is whitespace",
+  "source": "jsonrepair-tests",
+  "expected": {
+    "a": "foo"
+  }
+}

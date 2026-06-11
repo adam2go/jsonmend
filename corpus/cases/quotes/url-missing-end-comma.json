@@ -1,0 +1,10 @@
+{
+  "input": "{\"url\":\"https://www.bible.com/,\"id\":2}",
+  "verdict": "deterministic",
+  "rationale": "`,\"...\":`-pattern reopens as next member",
+  "source": "jsonrepair-tests",
+  "expected": {
+    "url": "https://www.bible.com/",
+    "id": 2
+  }
+}

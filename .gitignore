@@ -1,0 +1,14 @@
+HANDOVER.md
+.venv/
+venv/
+__pycache__/
+*.pyc
+*.egg-info/
+dist/
+build/
+node_modules/
+package.json
+package-lock.json
+.pytest_cache/
+.DS_Store
+bench_results/

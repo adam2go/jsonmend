@@ -1,0 +1,7 @@
+{
+  "input": "stringbeforeobject {}",
+  "verdict": "deterministic",
+  "rationale": "prose before a structured value is junk",
+  "source": "json_repair-tests",
+  "expected": {}
+}

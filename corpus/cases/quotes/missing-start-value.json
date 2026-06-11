@@ -1,0 +1,10 @@
+{
+  "input": "{\"a\":foo\",\"b\":\"bar\"}",
+  "verdict": "deterministic",
+  "rationale": "value missing its open quote",
+  "source": "jsonrepair-tests",
+  "expected": {
+    "a": "foo",
+    "b": "bar"
+  }
+}

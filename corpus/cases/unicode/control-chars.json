@@ -1,0 +1,7 @@
+{
+  "input": "\"hello\nworld\"",
+  "verdict": "deterministic",
+  "rationale": "raw control characters inside strings are content (escaped on output)",
+  "source": "jsonrepair-tests",
+  "expected": "hello\nworld"
+}

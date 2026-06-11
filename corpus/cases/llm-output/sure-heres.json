@@ -1,0 +1,10 @@
+{
+  "input": "Sure! Here is the JSON you asked for:\n\n{\"answer\": 42, \"confidence\": \"high\"}",
+  "verdict": "deterministic",
+  "rationale": "chatty preamble before a bare object",
+  "source": "jsonmend",
+  "expected": {
+    "answer": 42,
+    "confidence": "high"
+  }
+}

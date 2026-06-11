@@ -1,0 +1,23 @@
+{
+  "input": "{\"plan\": [{\"step\": 1, \"action\": \"search\", \"query\": \"weather 北京\"}, {\"step\": 2, \"action\": \"summarize\", \"max_words\": 120}], \"confidence\": 0.92, \"fallback\": null, \"tags\": ",
+  "verdict": "deterministic",
+  "rationale": "prefix of a valid document cut at offset 167; expectation from the reference truncation-closing rules",
+  "source": "jsonmend",
+  "expected": {
+    "plan": [
+      {
+        "step": 1,
+        "action": "search",
+        "query": "weather 北京"
+      },
+      {
+        "step": 2,
+        "action": "summarize",
+        "max_words": 120
+      }
+    ],
+    "confidence": 0.92,
+    "fallback": null,
+    "tags": null
+  }
+}

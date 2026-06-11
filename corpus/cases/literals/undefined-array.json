@@ -1,0 +1,9 @@
+{
+  "input": "[undefined]",
+  "verdict": "deterministic",
+  "rationale": "JS undefined becomes null",
+  "source": "jsonrepair-tests",
+  "expected": [
+    null
+  ]
+}

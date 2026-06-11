@@ -1,0 +1,10 @@
+{
+  "input": "{\n\"a\":\"foo\",//hello\n\"b\":\"bar\"\n}",
+  "verdict": "deterministic",
+  "rationale": "line comment between members",
+  "source": "jsonrepair-tests",
+  "expected": {
+    "a": "foo",
+    "b": "bar"
+  }
+}

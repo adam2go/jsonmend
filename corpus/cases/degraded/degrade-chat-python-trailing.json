@@ -1,0 +1,18 @@
+{
+  "input": "{\n  \"role\": \"assistant\",\n  \"content\": \"Sure thing\",\n  \"steps\": [1, 2, 3,],\n  \"done\": True,\n  \"score\": 0.87,\n  \"extra\": None,\n}",
+  "verdict": "deterministic",
+  "rationale": "mechanically degraded (python-trailing) from a known document; the original value is the only correct repair",
+  "source": "jsonmend",
+  "expected": {
+    "role": "assistant",
+    "content": "Sure thing",
+    "steps": [
+      1,
+      2,
+      3
+    ],
+    "done": true,
+    "score": 0.87,
+    "extra": null
+  }
+}

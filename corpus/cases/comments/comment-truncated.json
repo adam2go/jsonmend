@@ -1,0 +1,9 @@
+{
+  "input": "{ \"key\": \"value\" /* comment",
+  "verdict": "deterministic",
+  "rationale": "unclosed comment at EOF",
+  "source": "json_repair-tests",
+  "expected": {
+    "key": "value"
+  }
+}

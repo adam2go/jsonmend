@@ -1,0 +1,7 @@
+{
+  "input": "\"\\ud83d\\ude00\"",
+  "verdict": "deterministic",
+  "rationale": "escaped surrogate pairs combine",
+  "source": "jsonrepair-tests",
+  "expected": "😀"
+}

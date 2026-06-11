@@ -1,0 +1,9 @@
+{
+  "input": "{\"key\": 12345678901234567890}",
+  "verdict": "deterministic",
+  "rationale": "integers beyond 2^63 must not lose precision",
+  "source": "json_repair-tests",
+  "expected": {
+    "key": 12345678901234567890
+  }
+}

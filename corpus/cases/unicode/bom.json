@@ -1,0 +1,9 @@
+{
+  "input": "﻿{\"a\": 1}",
+  "verdict": "deterministic",
+  "rationale": "UTF-8 BOM is ignored",
+  "source": "jsonmend",
+  "expected": {
+    "a": 1
+  }
+}

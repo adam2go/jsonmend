@@ -1,0 +1,7 @@
+{
+  "input": "\"12:20",
+  "verdict": "deterministic",
+  "rationale": "colons inside unterminated strings are content",
+  "source": "jsonrepair-tests",
+  "expected": "12:20"
+}

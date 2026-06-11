@@ -1,0 +1,9 @@
+{
+  "input": "{'test_中国人_ascii':'统一码'}",
+  "verdict": "deterministic",
+  "rationale": "CJK content survives",
+  "source": "json_repair-tests",
+  "expected": {
+    "test_中国人_ascii": "统一码"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "input": "{\"d\" : ISODate(\"2012-12-19T06:01:17.171Z\")}",
+  "verdict": "deterministic",
+  "rationale": "MongoDB type wrappers unwrap",
+  "source": "jsonrepair-tests",
+  "expected": {
+    "d": "2012-12-19T06:01:17.171Z"
+  }
+}

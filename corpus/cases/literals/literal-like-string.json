@@ -1,0 +1,9 @@
+{
+  "input": "{\"key\": Truelove}",
+  "verdict": "deterministic",
+  "rationale": "words merely starting with a literal stay strings",
+  "source": "jsonmend",
+  "expected": {
+    "key": "Truelove"
+  }
+}

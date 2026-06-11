@@ -1,0 +1,9 @@
+{
+  "input": "{\"n\": +42}",
+  "verdict": "deterministic",
+  "rationale": "leading plus strips",
+  "source": "jsonmend",
+  "expected": {
+    "n": 42
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "input": "{2: 2}",
+  "verdict": "deterministic",
+  "rationale": "non-string keys stringify (JSON keys are strings)",
+  "source": "jsonrepair-tests",
+  "expected": {
+    "2": 2
+  }
+}

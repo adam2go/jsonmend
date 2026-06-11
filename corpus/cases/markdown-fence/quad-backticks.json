@@ -1,0 +1,9 @@
+{
+  "input": "````{ \"key\": \"value\" }```",
+  "verdict": "deterministic",
+  "rationale": "sloppy fence lengths still strip",
+  "source": "json_repair-tests",
+  "expected": {
+    "key": "value"
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "input": "```json\n{\"a\": 1}\n```\n\nWait, I need to correct that:\n\n```json\n{\"a\": 2}\n```",
+  "verdict": "ambiguous",
+  "rationale": "self-correction: both payloads, the first, or the last",
+  "source": "jsonmend",
+  "accepted": [
+    [
+      {
+        "a": 1
+      },
+      {
+        "a": 2
+      }
+    ],
+    {
+      "a": 1
+    },
+    {
+      "a": 2
+    }
+  ]
+}

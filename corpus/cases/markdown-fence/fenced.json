@@ -1,0 +1,9 @@
+{
+  "input": "```json\n{\"a\":\"b\"}\n```",
+  "verdict": "deterministic",
+  "rationale": "strip the fence, parse the payload",
+  "source": "jsonrepair-tests",
+  "expected": {
+    "a": "b"
+  }
+}

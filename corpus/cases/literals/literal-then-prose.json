@@ -1,0 +1,9 @@
+{
+  "input": "{\"a\": null pointer}",
+  "verdict": "deterministic",
+  "rationale": "a literal followed by more words is one unquoted string",
+  "source": "jsonmend",
+  "expected": {
+    "a": "null pointer"
+  }
+}

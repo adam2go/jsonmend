@@ -1,0 +1,15 @@
+{
+  "input": "[1, \"hi\", true, false, null, {}, []]",
+  "verdict": "deterministic",
+  "rationale": "valid JSON must round-trip unchanged",
+  "source": "jsonrepair-tests",
+  "expected": [
+    1,
+    "hi",
+    true,
+    false,
+    null,
+    {},
+    []
+  ]
+}

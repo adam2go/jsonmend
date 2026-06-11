@@ -1,0 +1,9 @@
+{
+  "input": "{\"a\":\"b}",
+  "verdict": "deterministic",
+  "rationale": "unterminated string closed by structure",
+  "source": "jsonrepair-tests",
+  "expected": {
+    "a": "b"
+  }
+}

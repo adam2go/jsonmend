@@ -1,0 +1,10 @@
+{
+  "input": "hello   world",
+  "verdict": "ambiguous",
+  "rationale": "bare words become one string, or nothing mendable",
+  "source": "jsonrepair-tests",
+  "accepted": [
+    "hello   world",
+    ""
+  ]
+}

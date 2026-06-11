@@ -1,0 +1,16 @@
+{
+  "input": "{\"key\": , \"key2\": \"value2\"}",
+  "verdict": "ambiguous",
+  "rationale": "missing value: null (absent) or empty string",
+  "source": "json_repair-tests",
+  "accepted": [
+    {
+      "key": null,
+      "key2": "value2"
+    },
+    {
+      "key": "",
+      "key2": "value2"
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "input": "[\"key\":\"value\"]",
+  "verdict": "deterministic",
+  "rationale": "key/colon inside an array starts an object",
+  "source": "json_repair-tests",
+  "expected": [
+    {
+      "key": "value"
+    }
+  ]
+}

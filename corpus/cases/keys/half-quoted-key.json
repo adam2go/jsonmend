@@ -1,0 +1,9 @@
+{
+  "input": "{\"key:value}",
+  "verdict": "deterministic",
+  "rationale": "colon inside an unterminated key splits key from value",
+  "source": "json_repair-tests",
+  "expected": {
+    "key": "value"
+  }
+}

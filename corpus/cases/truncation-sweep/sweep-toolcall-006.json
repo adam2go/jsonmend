@@ -1,0 +1,9 @@
+{
+  "input": "{\"id\":",
+  "verdict": "deterministic",
+  "rationale": "prefix of a valid document cut at offset 6; expectation from the reference truncation-closing rules",
+  "source": "jsonmend",
+  "expected": {
+    "id": null
+  }
+}

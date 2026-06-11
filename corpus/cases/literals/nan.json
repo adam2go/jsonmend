@@ -1,0 +1,14 @@
+{
+  "input": "{\"a\": NaN}",
+  "verdict": "ambiguous",
+  "rationale": "NaN is not JSON: null (JSON.stringify convention) or the string",
+  "source": "jsonmend",
+  "accepted": [
+    {
+      "a": null
+    },
+    {
+      "a": "NaN"
+    }
+  ]
+}

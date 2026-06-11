@@ -1,0 +1,7 @@
+{
+  "input": "4,",
+  "verdict": "deterministic",
+  "rationale": "top-level trailing comma drops",
+  "source": "jsonrepair-tests",
+  "expected": 4
+}

@@ -1,0 +1,10 @@
+{
+  "input": "{\"name\": \"send_email\", \"arguments\": \"{\\\"to\\\": \\\"a@b.c\\\", \\\"subject\\\": \\\"Hi\\\", \\\"body\\\": \\\"Hello",
+  "verdict": "deterministic",
+  "rationale": "truncated stringified arguments stay a (truncated) string",
+  "source": "jsonmend",
+  "expected": {
+    "name": "send_email",
+    "arguments": "{\"to\": \"a@b.c\", \"subject\": \"Hi\", \"body\": \"Hello"
+  }
+}

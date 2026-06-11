@@ -1,0 +1,19 @@
+{
+  "input": "{ \"key\": { \"key2\": \"value2\" # comment }, \"key3\": \"value3\" }",
+  "verdict": "ambiguous",
+  "rationale": "# comment runs to end of line; whether the } inside it counts is implementation-defined",
+  "source": "json_repair-tests",
+  "accepted": [
+    {
+      "key": {
+        "key2": "value2"
+      },
+      "key3": "value3"
+    },
+    {
+      "key": {
+        "key2": "value2"
+      }
+    }
+  ]
+}

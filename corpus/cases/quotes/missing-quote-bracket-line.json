@@ -1,0 +1,14 @@
+{
+  "input": "[\"abc]\n",
+  "verdict": "ambiguous",
+  "rationale": "either the ] closes the array (string was unterminated) or it is content of an unterminated string",
+  "source": "jsonrepair-tests",
+  "accepted": [
+    [
+      "abc"
+    ],
+    [
+      "abc]"
+    ]
+  ]
+}

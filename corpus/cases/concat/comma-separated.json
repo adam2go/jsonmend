@@ -1,0 +1,11 @@
+{
+  "input": "1,2,3",
+  "verdict": "deterministic",
+  "rationale": "comma-separated values become an array",
+  "source": "jsonrepair-tests",
+  "expected": [
+    1,
+    2,
+    3
+  ]
+}

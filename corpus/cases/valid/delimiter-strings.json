@@ -1,0 +1,14 @@
+{
+  "input": "[\"[\", \"]\", \"{\", \"}\", \":\", \",\"]",
+  "verdict": "deterministic",
+  "rationale": "JSON delimiters inside strings are content",
+  "source": "jsonrepair-tests",
+  "expected": [
+    "[",
+    "]",
+    "{",
+    "}",
+    ":",
+    ","
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "input": "{\"a\"：1}",
+  "verdict": "ambiguous",
+  "rationale": "fullwidth colon: separator or content",
+  "source": "jsonmend",
+  "accepted": [
+    {
+      "a": 1
+    },
+    {
+      "a": "：1"
+    }
+  ]
+}

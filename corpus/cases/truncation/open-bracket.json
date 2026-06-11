@@ -1,0 +1,7 @@
+{
+  "input": "[",
+  "verdict": "deterministic",
+  "rationale": "opened array, nothing else: empty array",
+  "source": "jsonrepair-tests",
+  "expected": []
+}

@@ -1,0 +1,7 @@
+{
+  "input": "NumberLong(\"2\")",
+  "verdict": "deterministic",
+  "rationale": "MongoDB type wrappers unwrap",
+  "source": "jsonrepair-tests",
+  "expected": "2"
+}

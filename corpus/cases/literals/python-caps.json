@@ -1,0 +1,11 @@
+{
+  "input": "{\"key\": TRUE, \"key2\": FALSE, \"key3\": Null}   ",
+  "verdict": "deterministic",
+  "rationale": "any-case boolean/null literals",
+  "source": "json_repair-tests",
+  "expected": {
+    "key": true,
+    "key2": false,
+    "key3": null
+  }
+}

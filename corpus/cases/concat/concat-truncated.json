@@ -1,0 +1,7 @@
+{
+  "input": "\"hello +",
+  "verdict": "deterministic",
+  "rationale": "dangling + after unterminated string drops",
+  "source": "jsonrepair-tests",
+  "expected": "hello"
+}

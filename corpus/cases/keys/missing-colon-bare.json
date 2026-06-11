@@ -1,0 +1,9 @@
+{
+  "input": "{a 'b'}",
+  "verdict": "deterministic",
+  "rationale": "bare key, missing colon",
+  "source": "jsonrepair-tests",
+  "expected": {
+    "a": "b"
+  }
+}

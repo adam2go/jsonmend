@@ -1,0 +1,15 @@
+{
+  "input": "{\"a\",}",
+  "verdict": "ambiguous",
+  "rationale": "a lone key: pair with null, drop it, or read as array",
+  "source": "jsonrepair-tests",
+  "accepted": [
+    {
+      "a": null
+    },
+    {},
+    [
+      "a"
+    ]
+  ]
+}

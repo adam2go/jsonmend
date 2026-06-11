@@ -1,0 +1,9 @@
+{
+  "input": "{\"key\": 1e10 }",
+  "verdict": "deterministic",
+  "rationale": "exponent numbers parse",
+  "source": "json_repair-tests",
+  "expected": {
+    "key": 10000000000.0
+  }
+}

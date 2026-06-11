@@ -1,0 +1,9 @@
+{
+  "input": "```python\n{\"a\":\"b\"}\n```",
+  "verdict": "deterministic",
+  "rationale": "any language tag is stripped",
+  "source": "jsonrepair-tests",
+  "expected": {
+    "a": "b"
+  }
+}

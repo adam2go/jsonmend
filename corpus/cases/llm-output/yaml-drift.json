@@ -1,0 +1,14 @@
+{
+  "input": "name: test\nvalue: 42",
+  "verdict": "ambiguous",
+  "rationale": "YAML-style output: prose string, parsed object, or nothing",
+  "source": "jsonmend",
+  "accepted": [
+    "name: test\nvalue: 42",
+    {
+      "name": "test",
+      "value": 42
+    },
+    ""
+  ]
+}

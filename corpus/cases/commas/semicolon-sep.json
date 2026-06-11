@@ -1,0 +1,11 @@
+{
+  "input": "[1; 2; 3]",
+  "verdict": "deterministic",
+  "rationale": "semicolons act as commas",
+  "source": "jsonmend",
+  "expected": [
+    1,
+    2,
+    3
+  ]
+}

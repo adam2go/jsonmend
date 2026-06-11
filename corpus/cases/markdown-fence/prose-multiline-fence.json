@@ -1,0 +1,9 @@
+{
+  "input": "\nThe next 64 elements are:\n```json\n{ \"key\": \"value\" }\n```",
+  "verdict": "deterministic",
+  "rationale": "multi-line prose before a fence is junk",
+  "source": "json_repair-tests",
+  "expected": {
+    "key": "value"
+  }
+}

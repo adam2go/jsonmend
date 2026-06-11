@@ -1,0 +1,7 @@
+{
+  "input": "'Double \" quote'",
+  "verdict": "deterministic",
+  "rationale": "double quote inside single-quoted string is content",
+  "source": "jsonrepair-tests",
+  "expected": "Double \" quote"
+}

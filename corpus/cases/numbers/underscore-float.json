@@ -1,0 +1,9 @@
+{
+  "input": "{\"value\": 1_234.5_6}",
+  "verdict": "deterministic",
+  "rationale": "digit-group underscores strip",
+  "source": "json_repair-tests",
+  "expected": {
+    "value": 1234.56
+  }
+}

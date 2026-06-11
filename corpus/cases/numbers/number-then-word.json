@@ -1,0 +1,9 @@
+{
+  "input": "{\"key\": 1notanumber }",
+  "verdict": "deterministic",
+  "rationale": "number glued to word is a string",
+  "source": "json_repair-tests",
+  "expected": {
+    "key": "1notanumber"
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "input": "[{\"b\":\"v1\",\"b\":\"v2\"}]",
+  "verdict": "ambiguous",
+  "rationale": "duplicate keys: last-wins (json.loads convention) or first-wins",
+  "source": "json_repair-tests",
+  "accepted": [
+    [
+      {
+        "b": "v2"
+      }
+    ],
+    [
+      {
+        "b": "v1"
+      }
+    ]
+  ]
+}

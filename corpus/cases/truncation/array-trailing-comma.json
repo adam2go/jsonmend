@@ -1,0 +1,9 @@
+{
+  "input": "[\"foo\",",
+  "verdict": "deterministic",
+  "rationale": "trailing comma then EOF: drop the comma, close",
+  "source": "jsonrepair-tests",
+  "expected": [
+    "foo"
+  ]
+}

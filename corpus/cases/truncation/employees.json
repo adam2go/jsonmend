@@ -1,0 +1,12 @@
+{
+  "input": "{\"employees\":[\"John\", \"Anna\",",
+  "verdict": "deterministic",
+  "rationale": "drop trailing comma, close all containers",
+  "source": "json_repair-tests",
+  "expected": {
+    "employees": [
+      "John",
+      "Anna"
+    ]
+  }
+}

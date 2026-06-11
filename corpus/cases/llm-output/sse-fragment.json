@@ -1,0 +1,14 @@
+{
+  "input": "data: {\"delta\": {\"content\": \"hel",
+  "verdict": "ambiguous",
+  "rationale": "an SSE-framed truncated event: parse the payload or keep the line",
+  "source": "jsonmend",
+  "accepted": [
+    {
+      "delta": {
+        "content": "hel"
+      }
+    },
+    "data: {\"delta\": {\"content\": \"hel"
+  ]
+}

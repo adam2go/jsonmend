@@ -1,0 +1,9 @@
+{
+  "input": "{\"city\": 北京}",
+  "verdict": "deterministic",
+  "rationale": "bare CJK values become strings",
+  "source": "jsonmend",
+  "expected": {
+    "city": "北京"
+  }
+}

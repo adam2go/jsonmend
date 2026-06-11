@@ -1,0 +1,9 @@
+{
+  "input": "[\"lorem \"ipsum\" sic\"]",
+  "verdict": "deterministic",
+  "rationale": "unescaped quotes inside an array string stay content",
+  "source": "json_repair-tests",
+  "expected": [
+    "lorem \"ipsum\" sic"
+  ]
+}

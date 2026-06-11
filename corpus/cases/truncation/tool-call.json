@@ -1,0 +1,12 @@
+{
+  "input": "{\"name\": \"search\", \"arguments\": {\"query\": \"weather in SF",
+  "verdict": "deterministic",
+  "rationale": "the canonical LLM tool-call truncation",
+  "source": "jsonmend",
+  "expected": {
+    "name": "search",
+    "arguments": {
+      "query": "weather in SF"
+    }
+  }
+}

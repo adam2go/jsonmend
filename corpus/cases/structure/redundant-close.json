@@ -1,0 +1,9 @@
+{
+  "input": "{\"a\": 1}}",
+  "verdict": "deterministic",
+  "rationale": "extra closers after a complete value are junk",
+  "source": "jsonrepair-tests",
+  "expected": {
+    "a": 1
+  }
+}

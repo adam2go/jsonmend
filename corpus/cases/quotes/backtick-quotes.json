@@ -1,0 +1,9 @@
+{
+  "input": "{`a´:`b´}",
+  "verdict": "deterministic",
+  "rationale": "backtick/acute pairs act as quotes",
+  "source": "jsonrepair-tests",
+  "expected": {
+    "a": "b"
+  }
+}

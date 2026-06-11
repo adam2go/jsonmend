@@ -1,0 +1,7 @@
+{
+  "input": "\"a\\u0000b\"",
+  "verdict": "deterministic",
+  "rationale": "escaped NUL decodes (it is valid JSON)",
+  "source": "jsonmend",
+  "expected": "a\u0000b"
+}

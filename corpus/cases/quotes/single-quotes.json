@@ -1,0 +1,9 @@
+{
+  "input": "{'a': 2}",
+  "verdict": "deterministic",
+  "rationale": "single quotes become double quotes",
+  "source": "jsonrepair-tests",
+  "expected": {
+    "a": 2
+  }
+}

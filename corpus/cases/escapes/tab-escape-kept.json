@@ -1,0 +1,9 @@
+{
+  "input": "{\"a\": \"x\\ty\"}",
+  "verdict": "deterministic",
+  "rationale": "valid escapes survive",
+  "source": "jsonmend",
+  "expected": {
+    "a": "x\ty"
+  }
+}

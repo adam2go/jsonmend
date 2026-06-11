@@ -1,0 +1,11 @@
+{
+  "input": "\"a\\ud800b\"",
+  "verdict": "ambiguous",
+  "rationale": "a lone surrogate cannot encode to UTF-8: replace it, pass it through, or drop it",
+  "source": "jsonmend",
+  "accepted": [
+    "a\ufffdb",
+    "a\ud800b",
+    "ab"
+  ]
+}

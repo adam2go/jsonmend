@@ -1,0 +1,9 @@
+{
+  "input": "{\"s\": \"x\\ud83d",
+  "verdict": "deterministic",
+  "rationale": "truncated surrogate pair drops cleanly",
+  "source": "jsonrepair-tests",
+  "expected": {
+    "s": "x"
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "input": "[}",
+  "verdict": "deterministic",
+  "rationale": "mismatched empty containers",
+  "source": "jsonrepair-tests",
+  "expected": []
+}

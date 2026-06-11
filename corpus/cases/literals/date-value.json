@@ -1,0 +1,9 @@
+{
+  "input": "{\"date\":2024-10-18T18:35:22.229Z}",
+  "verdict": "deterministic",
+  "rationale": "datetime-like bare tokens become strings",
+  "source": "jsonrepair-tests",
+  "expected": {
+    "date": "2024-10-18T18:35:22.229Z"
+  }
+}

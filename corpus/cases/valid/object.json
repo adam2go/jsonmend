@@ -1,0 +1,12 @@
+{
+  "input": "{\"a\": 1, \"b\": \"x\", \"c\": null, \"d\": false}",
+  "verdict": "deterministic",
+  "rationale": "valid JSON must round-trip unchanged",
+  "source": "jsonmend",
+  "expected": {
+    "a": 1,
+    "b": "x",
+    "c": null,
+    "d": false
+  }
+}

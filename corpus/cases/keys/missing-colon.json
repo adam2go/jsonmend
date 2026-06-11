@@ -1,0 +1,9 @@
+{
+  "input": "{\"a\" \"b\"}",
+  "verdict": "deterministic",
+  "rationale": "missing colon between key and value",
+  "source": "jsonrepair-tests",
+  "expected": {
+    "a": "b"
+  }
+}

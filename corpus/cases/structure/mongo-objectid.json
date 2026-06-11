@@ -1,0 +1,9 @@
+{
+  "input": "{\"_id\":ObjectId(\"123\")}",
+  "verdict": "deterministic",
+  "rationale": "MongoDB type wrappers unwrap",
+  "source": "jsonrepair-tests",
+  "expected": {
+    "_id": "123"
+  }
+}

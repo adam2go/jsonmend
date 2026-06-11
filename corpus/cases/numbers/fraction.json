@@ -1,0 +1,9 @@
+{
+  "input": "{\"key\": 1/3}",
+  "verdict": "deterministic",
+  "rationale": "fractions are not JSON numbers: keep as string",
+  "source": "json_repair-tests",
+  "expected": {
+    "key": "1/3"
+  }
+}

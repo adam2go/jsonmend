@@ -1,0 +1,9 @@
+{
+  "input": "{\"v\": None}",
+  "verdict": "deterministic",
+  "rationale": "Python None",
+  "source": "jsonrepair-tests",
+  "expected": {
+    "v": null
+  }
+}

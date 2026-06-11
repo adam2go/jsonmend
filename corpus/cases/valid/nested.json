@@ -1,0 +1,15 @@
+{
+  "input": "{\"k1\": {\"k2\": [1, 2, 3]}}",
+  "verdict": "deterministic",
+  "rationale": "valid JSON must round-trip unchanged",
+  "source": "json_repair-tests",
+  "expected": {
+    "k1": {
+      "k2": [
+        1,
+        2,
+        3
+      ]
+    }
+  }
+}

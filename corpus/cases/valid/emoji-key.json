@@ -1,0 +1,9 @@
+{
+  "input": "{\"😀\": true}",
+  "verdict": "deterministic",
+  "rationale": "astral plane chars in keys",
+  "source": "jsonrepair-tests",
+  "expected": {
+    "😀": true
+  }
+}

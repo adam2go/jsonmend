@@ -1,0 +1,7 @@
+{
+  "input": "\"valu\\'e\"",
+  "verdict": "deterministic",
+  "rationale": "\\' is not JSON but means a plain apostrophe",
+  "source": "json_repair-tests",
+  "expected": "valu'e"
+}

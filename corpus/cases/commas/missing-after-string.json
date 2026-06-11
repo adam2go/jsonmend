@@ -1,0 +1,10 @@
+{
+  "input": "[\"a\" 2]",
+  "verdict": "deterministic",
+  "rationale": "number after closed string implies comma",
+  "source": "jsonrepair-tests",
+  "expected": [
+    "a",
+    2
+  ]
+}

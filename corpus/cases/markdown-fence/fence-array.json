@@ -1,0 +1,11 @@
+{
+  "input": "```\n[1,2,3]\n```",
+  "verdict": "deterministic",
+  "rationale": "fenced array",
+  "source": "jsonrepair-tests",
+  "expected": [
+    1,
+    2,
+    3
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "input": "{\"name\": John}",
+  "verdict": "deterministic",
+  "rationale": "bare value quotes",
+  "source": "json_repair-tests",
+  "expected": {
+    "name": "John"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "input": "{\"a\":1}\n{\"b\":2}\n{\"c\":3}\n",
+  "verdict": "deterministic",
+  "rationale": "NDJSON becomes an array",
+  "source": "jsonrepair-tests",
+  "expected": [
+    {
+      "a": 1
+    },
+    {
+      "b": 2
+    },
+    {
+      "c": 3
+    }
+  ]
+}

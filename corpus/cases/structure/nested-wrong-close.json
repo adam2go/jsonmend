@@ -1,0 +1,16 @@
+{
+  "input": "{\"key1\": [\"value1\", \"value2\"}, \"key2\": [\"value3\", \"value4\"]}",
+  "verdict": "deterministic",
+  "rationale": "} closes the array, object continues",
+  "source": "json_repair-tests",
+  "expected": {
+    "key1": [
+      "value1",
+      "value2"
+    ],
+    "key2": [
+      "value3",
+      "value4"
+    ]
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "input": "\\\"hello world\\\"",
+  "verdict": "deterministic",
+  "rationale": "a backslash-escaped JSON document is unwrapped",
+  "source": "jsonrepair-tests",
+  "expected": "hello world"
+}

@@ -1,0 +1,9 @@
+{
+  "input": "\n{\"a\":\"b\"}\n```",
+  "verdict": "deterministic",
+  "rationale": "stray closing fence is ignored",
+  "source": "jsonrepair-tests",
+  "expected": {
+    "a": "b"
+  }
+}

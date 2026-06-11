@@ -1,0 +1,13 @@
+{
+  "input": "{\"result\": [1, 2, 3]}\n\nThis array contains the first three integers as requested.",
+  "verdict": "deterministic",
+  "rationale": "trailing explanation after the value is junk",
+  "source": "jsonmend",
+  "expected": {
+    "result": [
+      1,
+      2,
+      3
+    ]
+  }
+}

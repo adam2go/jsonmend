@@ -1,0 +1,14 @@
+{
+  "input": "{\"enabled\": yes}",
+  "verdict": "ambiguous",
+  "rationale": "yes/no are not JSON booleans: string (safe) or boolean (YAML-ish)",
+  "source": "jsonmend",
+  "accepted": [
+    {
+      "enabled": "yes"
+    },
+    {
+      "enabled": true
+    }
+  ]
+}

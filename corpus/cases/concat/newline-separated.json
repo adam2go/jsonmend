@@ -1,0 +1,10 @@
+{
+  "input": "1\n2",
+  "verdict": "deterministic",
+  "rationale": "newline-separated values become an array",
+  "source": "jsonrepair-tests",
+  "expected": [
+    1,
+    2
+  ]
+}

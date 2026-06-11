@@ -1,0 +1,22 @@
+{
+  "input": "lorem ```json {\"key\":\"value\"} ``` ipsum ```json [1,2,3,true] ``` 42",
+  "verdict": "ambiguous",
+  "rationale": "multiple fenced payloads: an array of both, or the first only; prose between and after fences is junk",
+  "source": "json_repair-tests",
+  "accepted": [
+    [
+      {
+        "key": "value"
+      },
+      [
+        1,
+        2,
+        3,
+        true
+      ]
+    ],
+    {
+      "key": "value"
+    }
+  ]
+}

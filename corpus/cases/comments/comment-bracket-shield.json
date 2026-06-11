@@ -1,0 +1,7 @@
+{
+  "input": "{\n// comment ]\n}",
+  "verdict": "deterministic",
+  "rationale": "brackets inside comments are not structure",
+  "source": "json_repair-tests",
+  "expected": {}
+}

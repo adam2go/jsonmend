@@ -1,0 +1,7 @@
+{
+  "input": "{",
+  "verdict": "deterministic",
+  "rationale": "opened object, nothing else: empty object",
+  "source": "jsonrepair-tests",
+  "expected": {}
+}

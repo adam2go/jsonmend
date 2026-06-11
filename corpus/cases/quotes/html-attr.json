@@ -1,0 +1,9 @@
+{
+  "input": "{\n\"html\": \"<h3 id=\"aaa\">Waarom meer dan 200 Technical Experts - \"Passie voor techniek\"?</h3>\"}",
+  "verdict": "deterministic",
+  "rationale": "HTML attributes with unescaped quotes stay content",
+  "source": "json_repair-tests",
+  "expected": {
+    "html": "<h3 id=\"aaa\">Waarom meer dan 200 Technical Experts - \"Passie voor techniek\"?</h3>"
+  }
+}

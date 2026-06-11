@@ -1,0 +1,9 @@
+{
+  "input": "{\\\"key\\\": \\\"value\\\"}",
+  "verdict": "deterministic",
+  "rationale": "backslash-escaped keys/values are unwrapped",
+  "source": "json_repair-tests",
+  "expected": {
+    "key": "value"
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "input": "{\"array\": [{}{}]}",
+  "verdict": "deterministic",
+  "rationale": "missing comma between array items",
+  "source": "jsonrepair-tests",
+  "expected": {
+    "array": [
+      {},
+      {}
+    ]
+  }
+}

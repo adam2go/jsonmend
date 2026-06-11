@@ -1,0 +1,7 @@
+{
+  "input": "'Rounded ’ quote'",
+  "verdict": "deterministic",
+  "rationale": "smart quotes inside a closed string are content",
+  "source": "jsonrepair-tests",
+  "expected": "Rounded ’ quote"
+}

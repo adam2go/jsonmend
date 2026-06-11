@@ -1,0 +1,7 @@
+{
+  "input": "\"hello\" + /*comment*/ \" world\"",
+  "verdict": "deterministic",
+  "rationale": "concatenation with comments",
+  "source": "jsonrepair-tests",
+  "expected": "hello world"
+}

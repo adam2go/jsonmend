@@ -1,0 +1,7 @@
+{
+  "input": "\"\\\"\\\\\\/\\b\\f\\n\\r\\t\"",
+  "verdict": "deterministic",
+  "rationale": "all simple escapes",
+  "source": "jsonrepair-tests",
+  "expected": "\"\\/\b\f\n\r\t"
+}
