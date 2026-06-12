@@ -20,7 +20,7 @@ import math as _math
 
 from ._engine import SKIP, JSONMendError, MendMachine
 
-__version__ = "0.1.0"
+__version__ = "0.1.1"
 
 __all__ = [
     "repair_json", "loads", "load", "from_file",

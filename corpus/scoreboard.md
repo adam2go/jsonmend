@@ -2,7 +2,7 @@
 
 Pass rates over the conformance corpus (see [README.md](README.md) for pass criteria).
 
-Versions: jsonmend 0.1.0, json_repair 0.60.1 (PyPI `json-repair`), jsonrepair 3.14.0 (npm). Regenerate with `python tools/referee.py --write`.
+Versions: jsonmend 0.1.1, json_repair 0.60.1 (PyPI `json-repair`), jsonrepair 3.14.0 (npm). Regenerate with `python tools/referee.py --write`.
 
 | category | cases | jsonmend | json_repair | jsonrepair |
 |---|---|---|---|---|

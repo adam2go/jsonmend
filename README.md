@@ -32,7 +32,7 @@ source of production bugs. The [jsonmend conformance corpus](corpus/)
 including the genuinely ambiguous cases, where every defensible answer
 is accepted.
 
-| | jsonmend 0.1.0 | json_repair 0.60.1 | jsonrepair 3.14.0 (JS) |
+| | jsonmend 0.1.1 | json_repair 0.60.1 | jsonrepair 3.14.0 (JS) |
 |---|---|---|---|
 | corpus pass rate | **485/485 (100%)** | 339/485 (69.9%) | 365/485 (75.3%) |
 
