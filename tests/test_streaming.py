@@ -133,7 +133,11 @@ def test_incremental_is_linear():
         m.close()
         return time.perf_counter() - t0
 
-    run(10)  # warm up
-    small = min(run(25) for _ in range(3))
+    # warm up (PyPy JIT) and use a large-enough baseline that timer
+    # noise cannot dominate the ratio
+    run(500)
+    run(500)
+    small = min(run(500) for _ in range(5))
     big = min(run(5000) for _ in range(3))
-    assert big < small * 600, (small, big)
+    # 10x input: O(n) ~10x, full-rescan ~100x; 60x separates them
+    assert big < max(small, 1e-3) * 60, (small, big)

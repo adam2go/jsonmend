@@ -110,12 +110,15 @@ def test_quote_storm_is_linear():
         jsonmend.repair_json(text, skip_json_loads=True)
         return time.perf_counter() - t0
 
-    run(100)
-    small = min(run(200) for _ in range(3))
+    # warm up (PyPy JIT) and use a large-enough baseline that timer noise
+    # and JIT effects cannot dominate the ratio
+    run(2000)
+    run(2000)
+    small = min(run(2000) for _ in range(5))
     big = min(run(20000) for _ in range(3))
-    # 100x input; allow generous 3000x before calling it quadratic (would
-    # be ~10000x if O(n^2))
-    assert big < max(small, 1e-4) * 3000, (small, big)
+    # 10x input: O(n) ~10x, O(n^2) ~100x; 60x cleanly separates them
+    # while tolerating 6x of scheduling/JIT noise
+    assert big < max(small, 1e-3) * 60, (small, big)
 
 
 def test_huge_clean_string_fast():
