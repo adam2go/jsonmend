@@ -1,0 +1,12 @@
+{
+  "input": "<tool_call>{\"name\": \"f\", \"arguments\": {\"x\": 1",
+  "verdict": "deterministic",
+  "rationale": "<tool_call> wrapper + truncation compose",
+  "source": "jsonmend",
+  "expected": {
+    "name": "f",
+    "arguments": {
+      "x": 1
+    }
+  }
+}

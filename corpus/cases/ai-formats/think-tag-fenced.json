@@ -1,0 +1,10 @@
+{
+  "input": "<think>plan: emit JSON</think>\n```json\n[1, 2]\n```",
+  "verdict": "deterministic",
+  "rationale": "<think> block before a fenced payload",
+  "source": "jsonmend",
+  "expected": [
+    1,
+    2
+  ]
+}

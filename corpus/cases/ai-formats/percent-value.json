@@ -1,0 +1,9 @@
+{
+  "input": "{\"score\": 95%}",
+  "verdict": "deterministic",
+  "rationale": "percent values are not JSON numbers: keep as string",
+  "source": "jsonmend",
+  "expected": {
+    "score": "95%"
+  }
+}

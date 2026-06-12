@@ -1,0 +1,9 @@
+{
+  "input": "Thought: I need to search.\nAction: search\nAction Input: {\"query\": \"weather\"}",
+  "verdict": "deterministic",
+  "rationale": "ReAct agent format: the Action Input object is the payload",
+  "source": "jsonmend",
+  "expected": {
+    "query": "weather"
+  }
+}

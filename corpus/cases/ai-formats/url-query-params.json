@@ -1,0 +1,9 @@
+{
+  "input": "{\"u\": https://a.b/c?d=1&e=2}",
+  "verdict": "deterministic",
+  "rationale": "bare URLs with query strings survive",
+  "source": "jsonmend",
+  "expected": {
+    "u": "https://a.b/c?d=1&e=2"
+  }
+}

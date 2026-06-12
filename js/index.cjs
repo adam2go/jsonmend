@@ -1775,9 +1775,13 @@ function mend(text, options) {
   return result;
 }
 
+// JSON.parse loses precision on integers beyond 2^53; route inputs
+// containing long digit runs through the mender, which uses BigInt.
+const LONG_INT_RE = /\d{16,}/;
+
 function loads(text, options) {
   if (typeof text !== "string") text = String(text);
-  if (!(options && options.skipJsonParse)) {
+  if (!(options && options.skipJsonParse) && !LONG_INT_RE.test(text)) {
     try {
       return JSON.parse(text);
     } catch (e) {
@@ -1792,7 +1796,7 @@ function repairJson(text, options) {
   if (typeof text !== "string") text = String(text);
   let value;
   let parsed = false;
-  if (!options.skipJsonParse) {
+  if (!options.skipJsonParse && !LONG_INT_RE.test(text)) {
     try {
       value = JSON.parse(text);
       parsed = true;

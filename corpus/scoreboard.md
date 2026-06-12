@@ -7,6 +7,7 @@ Versions: jsonmend 0.1.0, json_repair 0.60.1 (PyPI `json-repair`), jsonrepair 3.
 | category | cases | jsonmend | json_repair | jsonrepair |
 |---|---|---|---|---|
 | adversarial | 5 | 5 | 4 | 5 |
+| ai-formats | 25 | 25 | 19 | 11 |
 | commas | 24 | 24 | 20 | 22 |
 | comments | 15 | 15 | 13 | 13 |
 | concat | 14 | 14 | 5 | 10 |
@@ -24,4 +25,4 @@ Versions: jsonmend 0.1.0, json_repair 0.60.1 (PyPI `json-repair`), jsonrepair 3.
 | unicode | 16 | 16 | 14 | 14 |
 | unrecoverable | 5 | 5 | 5 | 5 |
 | valid | 16 | 16 | 16 | 16 |
-| **total** | **460** | **460 (100.0%)** | **320 (69.6%)** | **354 (77.0%)** |
+| **total** | **485** | **485 (100.0%)** | **339 (69.9%)** | **365 (75.3%)** |

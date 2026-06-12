@@ -1,0 +1,15 @@
+{
+  "input": "[{\"name\":\"f1\",\"arguments\":\"{\\\"a\\\":1}\"},{\"name\":\"f2\"",
+  "verdict": "deterministic",
+  "rationale": "parallel tool calls truncated mid-list",
+  "source": "jsonmend",
+  "expected": [
+    {
+      "name": "f1",
+      "arguments": "{\"a\":1}"
+    },
+    {
+      "name": "f2"
+    }
+  ]
+}

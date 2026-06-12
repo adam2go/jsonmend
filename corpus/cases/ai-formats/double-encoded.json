@@ -1,0 +1,7 @@
+{
+  "input": "\"{\\\"a\\\": 1}\"",
+  "verdict": "deterministic",
+  "rationale": "a JSON-encoded string stays a string (it is already valid JSON)",
+  "source": "jsonmend",
+  "expected": "{\"a\": 1}"
+}

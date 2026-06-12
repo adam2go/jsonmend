@@ -1,0 +1,14 @@
+{
+  "input": "<tool_call>{\"name\": \"a\"}</tool_call>\n<tool_call>{\"name\": \"b\"}</tool_call>",
+  "verdict": "deterministic",
+  "rationale": "multiple tagged tool calls become an array",
+  "source": "jsonmend",
+  "expected": [
+    {
+      "name": "a"
+    },
+    {
+      "name": "b"
+    }
+  ]
+}

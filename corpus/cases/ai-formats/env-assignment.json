@@ -1,0 +1,9 @@
+{
+  "input": "RESULT={\"ok\": true}",
+  "verdict": "deterministic",
+  "rationale": "shell-style assignment prefix is junk",
+  "source": "jsonmend",
+  "expected": {
+    "ok": true
+  }
+}

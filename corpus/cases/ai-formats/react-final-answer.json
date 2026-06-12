@@ -1,0 +1,9 @@
+{
+  "input": "Final Answer: {\"result\": 42}",
+  "verdict": "deterministic",
+  "rationale": "ReAct final answer line",
+  "source": "jsonmend",
+  "expected": {
+    "result": 42
+  }
+}

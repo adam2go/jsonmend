@@ -1,0 +1,14 @@
+{
+  "input": "data: {\"a\":1}\n\ndata: {\"a\":2}\n\n",
+  "verdict": "deterministic",
+  "rationale": "SSE-framed events: each data: payload is a value",
+  "source": "jsonmend",
+  "expected": [
+    {
+      "a": 1
+    },
+    {
+      "a": 2
+    }
+  ]
+}

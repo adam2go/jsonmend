@@ -1,0 +1,12 @@
+{
+  "input": "<tool_call>\n{\"name\": \"get_weather\", \"arguments\": {\"city\": \"Paris\"}}\n</tool_call>",
+  "verdict": "deterministic",
+  "rationale": "Hermes/Qwen-style <tool_call> XML wrapper strips",
+  "source": "jsonmend",
+  "expected": {
+    "name": "get_weather",
+    "arguments": {
+      "city": "Paris"
+    }
+  }
+}

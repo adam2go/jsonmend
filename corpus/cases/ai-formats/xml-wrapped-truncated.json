@@ -1,0 +1,21 @@
+{
+  "input": "<response>\n{\"items\": [\"a\", \"b\"\n</response>",
+  "verdict": "ambiguous",
+  "rationale": "XML wrapper with a truncated payload inside",
+  "source": "jsonmend",
+  "accepted": [
+    {
+      "items": [
+        "a",
+        "b"
+      ]
+    },
+    {
+      "items": [
+        "a",
+        "b",
+        "</response>"
+      ]
+    }
+  ]
+}

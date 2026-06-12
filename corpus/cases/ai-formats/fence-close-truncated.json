@@ -1,0 +1,9 @@
+{
+  "input": "```json\n{\"a\":1}\n``",
+  "verdict": "deterministic",
+  "rationale": "fence whose closing ticks got cut",
+  "source": "jsonmend",
+  "expected": {
+    "a": 1
+  }
+}

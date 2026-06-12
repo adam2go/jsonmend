@@ -1,0 +1,9 @@
+{
+  "input": "{\"name\": \"مرحبا بالعالم\"}",
+  "verdict": "deterministic",
+  "rationale": "RTL content survives",
+  "source": "jsonmend",
+  "expected": {
+    "name": "مرحبا بالعالم"
+  }
+}

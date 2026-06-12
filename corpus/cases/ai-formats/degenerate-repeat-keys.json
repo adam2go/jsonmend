@@ -1,0 +1,9 @@
+{
+  "input": "{\"x\": 1, \"x\": 1, \"x\": 1,",
+  "verdict": "deterministic",
+  "rationale": "repeated identical members collapse",
+  "source": "jsonmend",
+  "expected": {
+    "x": 1
+  }
+}

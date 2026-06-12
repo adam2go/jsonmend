@@ -1,0 +1,9 @@
+{
+  "input": "<function=search>{\"query\": \"cats\"}</function>",
+  "verdict": "deterministic",
+  "rationale": "Llama-style <function=...> wrapper strips",
+  "source": "jsonmend",
+  "expected": {
+    "query": "cats"
+  }
+}

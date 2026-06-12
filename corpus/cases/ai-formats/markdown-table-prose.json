@@ -1,0 +1,9 @@
+{
+  "input": "| col | val |\n|---|---|\n| a | 1 |\n\n{\"a\": 1}",
+  "verdict": "deterministic",
+  "rationale": "markdown table prose before the value is junk",
+  "source": "jsonmend",
+  "expected": {
+    "a": 1
+  }
+}

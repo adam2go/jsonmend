@@ -1,0 +1,9 @@
+{
+  "input": "{\"text\": \"café\"}",
+  "verdict": "deterministic",
+  "rationale": "combining marks are not normalized away",
+  "source": "jsonmend",
+  "expected": {
+    "text": "café"
+  }
+}

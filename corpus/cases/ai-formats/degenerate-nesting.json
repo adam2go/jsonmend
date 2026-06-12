@@ -1,0 +1,15 @@
+{
+  "input": "{\"a\": {\"a\": {\"a\": {\"a\":",
+  "verdict": "deterministic",
+  "rationale": "looping-model degeneration still closes cleanly",
+  "source": "jsonmend",
+  "expected": {
+    "a": {
+      "a": {
+        "a": {
+          "a": null
+        }
+      }
+    }
+  }
+}

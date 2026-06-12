@@ -1,0 +1,9 @@
+{
+  "input": "{\"price\": $12.50}",
+  "verdict": "deterministic",
+  "rationale": "currency values keep as string",
+  "source": "jsonmend",
+  "expected": {
+    "price": "$12.50"
+  }
+}

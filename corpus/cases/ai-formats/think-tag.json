@@ -1,0 +1,9 @@
+{
+  "input": "<think>I should call the weather tool.</think>\n{\"city\": \"Paris\"}",
+  "verdict": "deterministic",
+  "rationale": "reasoning-model <think> blocks are junk around the payload",
+  "source": "jsonmend",
+  "expected": {
+    "city": "Paris"
+  }
+}

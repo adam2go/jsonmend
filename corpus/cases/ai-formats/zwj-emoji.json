@@ -1,0 +1,9 @@
+{
+  "input": "{\"family\": \"👨‍👩‍👧‍👦\"}",
+  "verdict": "deterministic",
+  "rationale": "ZWJ emoji sequences survive byte-exact",
+  "source": "jsonmend",
+  "expected": {
+    "family": "👨‍👩‍👧‍👦"
+  }
+}

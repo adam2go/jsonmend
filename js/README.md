@@ -5,7 +5,7 @@
 JavaScript port of [jsonmend](https://github.com/adam2go/jsonmend) — same
 engine design, same repair semantics, verified against the same
 [conformance corpus](https://github.com/adam2go/jsonmend/tree/main/corpus)
-(460/460). The Python and JS implementations repair identically, so a
+(485/485). The Python and JS implementations repair identically, so a
 model output parses the same on both sides of your stack.
 
 Zero dependencies. Node ≥ 14, browsers, workers.

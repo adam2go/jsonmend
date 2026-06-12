@@ -1,0 +1,20 @@
+{
+  "input": "{\"v\": array([1, 2])}",
+  "verdict": "ambiguous",
+  "rationale": "library reprs: unwrap the payload or keep it textual",
+  "source": "jsonmend",
+  "accepted": [
+    {
+      "v": [
+        1,
+        2
+      ]
+    },
+    {
+      "v": "[1, 2]"
+    },
+    {
+      "v": "array([1, 2])"
+    }
+  ]
+}

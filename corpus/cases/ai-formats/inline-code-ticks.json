@@ -1,0 +1,9 @@
+{
+  "input": "`{\"a\":1}`",
+  "verdict": "deterministic",
+  "rationale": "single-backtick inline code strips",
+  "source": "jsonmend",
+  "expected": {
+    "a": 1
+  }
+}

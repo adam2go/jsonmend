@@ -2,7 +2,7 @@
 
 [![CI](https://github.com/adam2go/jsonmend/actions/workflows/ci.yml/badge.svg)](https://github.com/adam2go/jsonmend/actions/workflows/ci.yml)
 [![PyPI](https://img.shields.io/pypi/v/jsonmend)](https://pypi.org/project/jsonmend/)
-[![conformance](https://img.shields.io/badge/conformance_corpus-460%2F460-brightgreen)](corpus/scoreboard.md)
+[![conformance](https://img.shields.io/badge/conformance_corpus-485%2F485-brightgreen)](corpus/scoreboard.md)
 [![license](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
 
 **Mends the JSON your LLM almost wrote.**
@@ -28,13 +28,13 @@ pip install jsonmend
 JSON repair has no standard: the same broken input is repaired
 *differently* by the Python and JavaScript incumbents, which is a real
 source of production bugs. The [jsonmend conformance corpus](corpus/)
-(460 cases, 19 categories, CC0) defines repair semantics as data —
+(485 cases, 20 categories, CC0) defines repair semantics as data —
 including the genuinely ambiguous cases, where every defensible answer
 is accepted.
 
 | | jsonmend 0.1.0 | json_repair 0.60.1 | jsonrepair 3.14.0 (JS) |
 |---|---|---|---|
-| corpus pass rate | **460/460 (100%)** | 320/460 (69.6%) | 354/460 (77.0%) |
+| corpus pass rate | **485/485 (100%)** | 339/485 (69.9%) | 365/485 (75.3%) |
 
 Per-category breakdown: [corpus/scoreboard.md](corpus/scoreboard.md).
 Reproduce: `python tools/referee.py --write` (needs `pip install
@@ -162,7 +162,7 @@ nesting (no recursion anywhere)
 ## The corpus is the point
 
 If you maintain a JSON-repair library in any language: please steal
-[corpus/](corpus/). It is CC0, the format is three fields, and 460 cases
+[corpus/](corpus/). It is CC0, the format is three fields, and 485 cases
 with rationales are more valuable than any of our engines. Cross-language
 agreement on repair semantics helps everyone shipping LLM systems.
 
