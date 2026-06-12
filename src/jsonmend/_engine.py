@@ -1727,6 +1727,9 @@ class MendMachine:
                         break
                     nl_checked = nl + 1
                     nl = s.find("\n", nl_checked, j)
+                # [nl_checked, j) is now known newline-free; never rescan
+                # it for the next candidate (this keeps quote storms O(n))
+                nl_checked = j
                 if early != -1:
                     raw = s[start:early].rstrip()
                     if raw.endswith(","):

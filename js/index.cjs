@@ -1588,6 +1588,8 @@ class MendMachine {
           nlChecked = nl + 1;
           nl = findIn(s, "\n", nlChecked, j);
         }
+        // [nlChecked, j) is now known newline-free; never rescan it
+        nlChecked = j;
         if (early !== -1) {
           const raw = trimEndWs(s.slice(start, early));
           if (raw.endsWith(",")) {
