@@ -1,6 +1,6 @@
 {
   "name": "jsonmend",
-  "version": "0.1.1",
+  "version": "0.1.3",
   "description": "Mends the JSON your LLM almost wrote — repair + true incremental streaming, defined by an open conformance corpus",
   "license": "MIT",
   "author": "adam2go",
@@ -22,8 +22,10 @@
     "jsonrepair"
   ],
   "main": "index.cjs",
+  "types": "index.d.ts",
   "exports": {
     ".": {
+      "types": "./index.d.ts",
       "import": "./index.mjs",
       "require": "./index.cjs"
     }
@@ -31,6 +33,7 @@
   "files": [
     "index.cjs",
     "index.mjs",
+    "index.d.ts",
     "README.md"
   ],
   "scripts": {

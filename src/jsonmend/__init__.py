@@ -17,18 +17,24 @@ from __future__ import annotations
 
 import json as _json
 import math as _math
+from typing import IO, Any, Dict, List, Union
 
 from ._engine import SKIP, JSONMendError, MendMachine
 
-__version__ = "0.1.2"
+__version__ = "0.1.3"
 
 __all__ = [
     "repair_json", "loads", "load", "from_file",
-    "mend", "Mender", "JSONMendError", "__version__",
+    "mend", "Mender", "JSONMendError", "MendValue", "__version__",
 ]
 
+# A parsed JSON-ish value produced by the mender.
+MendValue = Union[None, bool, int, float, str,
+                  List["MendValue"], Dict[str, "MendValue"]]
 
-def mend(text, *, strict=False, _doom_hint=None):
+
+def mend(text: str, *, strict: bool = False,
+         _doom_hint: int | None = None) -> MendValue | str:
     """Repair ``text`` and return the parsed Python value.
 
     This always runs the repair machine (no ``json.loads`` fast path).
@@ -53,7 +59,8 @@ def mend(text, *, strict=False, _doom_hint=None):
     return result
 
 
-def loads(json_str, *, skip_json_loads=False, strict=False, **_compat):
+def loads(json_str: str, *, skip_json_loads: bool = False,
+          strict: bool = False, **_compat: Any) -> MendValue:
     """Repair and parse, returning Python objects.
 
     Valid JSON takes a C-speed ``json.loads`` fast path unless
@@ -72,8 +79,10 @@ def loads(json_str, *, skip_json_loads=False, strict=False, **_compat):
     return mend(json_str, strict=strict)
 
 
-def repair_json(json_str="", return_objects=False, skip_json_loads=False,
-                ensure_ascii=True, strict=False, **json_dumps_args):
+def repair_json(json_str: str = "", return_objects: bool = False,
+                skip_json_loads: bool = False, ensure_ascii: bool = True,
+                strict: bool = False,
+                **json_dumps_args: Any) -> Any:
     """Repair broken JSON.  Returns a JSON string (or objects).
 
     API-compatible with ``json_repair.repair_json`` for the core
@@ -107,12 +116,12 @@ def repair_json(json_str="", return_objects=False, skip_json_loads=False,
     return _dumps(value, ensure_ascii=ensure_ascii, **json_dumps_args)
 
 
-def load(fd, **kwargs):
+def load(fd: IO[str], **kwargs: Any) -> MendValue:
     """Repair and parse JSON from a file-like object."""
     return loads(fd.read(), **kwargs)
 
 
-def from_file(filename, **kwargs):
+def from_file(filename: str, **kwargs: Any) -> MendValue:
     """Repair and parse JSON from a file path."""
     with open(filename, encoding="utf-8-sig", newline="") as fd:
         return loads(fd.read(), **kwargs)
@@ -133,7 +142,7 @@ class Mender:
         self._closed = False
         self._result = None
 
-    def feed(self, chunk):
+    def feed(self, chunk: str) -> MendValue | None:
         """Feed one chunk; returns the current best-effort value."""
         if self._closed:
             raise ValueError("Mender is closed")
@@ -149,7 +158,7 @@ class Mender:
             return self._result
         return self._machine.current()
 
-    def close(self):
+    def close(self) -> MendValue | str:
         """Finish parsing and return the final mended value."""
         if not self._closed:
             result = self._machine.close()

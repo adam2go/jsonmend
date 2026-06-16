@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "jsonmend"
-version = "0.1.2"
+version = "0.1.3"
 description = "Mends the JSON your LLM almost wrote - fast single-pass repair with true incremental streaming"
 readme = "README.md"
 requires-python = ">=3.9"
@@ -34,6 +34,9 @@ Homepage = "https://github.com/adam2go/jsonmend"
 
 [tool.setuptools.packages.find]
 where = ["src"]
+
+[tool.setuptools.package-data]
+jsonmend = ["py.typed"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
