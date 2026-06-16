@@ -58,7 +58,9 @@ Reproduce: `python tools/bench.py --verify && python tools/bench.py`.
 
 A streaming UI re-renders the partial value on every chunk. With a batch
 repairer you must re-parse the whole buffer each time — O(n²) total. The
-stateful `Mender` only pays for the new bytes:
+stateful `Mender` only pays for the new bytes (amortised O(1) per fed
+character on CPython — guarded by a buffer-copy invariant test, not a
+flaky timer):
 
 | workload | jsonmend `Mender` | json_repair (`stream_stable=True`) | |
 |---|---|---|---|

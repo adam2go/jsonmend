@@ -198,8 +198,16 @@ class MendMachine:
         if self.done:
             return
         self.detach_partial()
-        self.s += chunk
-        self.n = len(self.s)
+        # Grow the buffer via a *local* so CPython appends in place
+        # (amortised O(1)); `self.s += chunk` would keep a second
+        # reference live and copy the whole buffer every feed -> O(n^2).
+        # The generator's suspension idiom (`s = None`/`m = None` before
+        # every yield) keeps this the only live reference.
+        s = self.s
+        self.s = None
+        s += chunk
+        self.s = s
+        self.n = len(s)
         try:
             self._gen.send(None)
         except StopIteration:
@@ -444,10 +452,12 @@ class MendMachine:
                 if c.isdigit() or c == "-":
                     m = _NUM_RE.match(s, i)
                     k = m.end() if m else i
-                    if m and k < n:
+                    m = None  # don't let the Match outlive this block and
+                    # pin the stream buffer across the _scalar yield below
+                    if k < n and (k > i):
                         nc = s[k]
                         if nc in ",}]" or nc in ws:
-                            tok = m.group()
+                            tok = s[i:k]
                             if tok[-1].isdigit() and "_" not in tok and \
                                     not _LEADING_ZERO_RE.match(tok):
                                 if "." in tok or "e" in tok or "E" in tok:
@@ -872,6 +882,7 @@ class MendMachine:
                                     while mm and mm.end() >= n and \
                                             not self.final:
                                         s = None
+                                        mm = None  # drop Match: keep stream buffer refcount-1 for O(1) append
                                         yield
                                         s = self.s
                                         n = self.n
@@ -981,6 +992,7 @@ class MendMachine:
                     if m:
                         while m.end() >= n and not self.final:
                             s = None
+                            m = None  # drop Match: keep stream buffer refcount-1 for O(1) append
                             yield
                             s = self.s
                             n = self.n
@@ -990,6 +1002,7 @@ class MendMachine:
                             k += 1
                         while k >= n and not self.final:
                             s = None
+                            mm = None  # drop Match: keep stream buffer refcount-1 for O(1) append
                             yield
                             s = self.s
                             n = self.n
@@ -1035,6 +1048,7 @@ class MendMachine:
                 if m:
                     while m.end() >= n and not self.final:
                         s = None
+                        m = None  # drop Match: keep stream buffer refcount-1 for O(1) append
                         yield
                         s = self.s
                         n = self.n
@@ -1369,6 +1383,7 @@ class MendMachine:
                 while m is None and i + 1 >= n and not self.final:
                     # a sign/dot at the buffer edge may grow into a number
                     s = None
+                    m = None  # drop Match: keep stream buffer refcount-1 for O(1) append
                     yield
                     s = self.s
                     n = self.n
@@ -1376,6 +1391,7 @@ class MendMachine:
                 if m:
                     while m.end() >= n and not self.final:
                         s = None
+                        m = None  # drop Match: keep stream buffer refcount-1 for O(1) append
                         yield
                         s = self.s
                         n = self.n
@@ -1409,6 +1425,7 @@ class MendMachine:
                 m = _WORD_RE.match(s, i + 1)
                 while m is None and i + 1 >= n and not self.final:
                     s = None
+                    m = None  # drop Match: keep stream buffer refcount-1 for O(1) append
                     yield
                     s = self.s
                     n = self.n
@@ -1416,6 +1433,7 @@ class MendMachine:
                 if m and c in "+-":
                     while m.end() >= n and not self.final:
                         s = None
+                        m = None  # drop Match: keep stream buffer refcount-1 for O(1) append
                         yield
                         s = self.s
                         n = self.n
@@ -1434,6 +1452,7 @@ class MendMachine:
             if m:
                 while m.end() >= n and not self.final:
                     s = None
+                    m = None  # drop Match: keep stream buffer refcount-1 for O(1) append
                     yield
                     s = self.s
                     n = self.n
@@ -1832,6 +1851,7 @@ class MendMachine:
                     mm = _WORD_RE.match(s, p)
                     while mm and mm.end() >= n and not self.final:
                         s = None
+                        mm = None  # drop Match: keep stream buffer refcount-1 for O(1) append
                         yield
                         s = self.s
                         n = self.n

@@ -37,9 +37,16 @@ for await (const chunk of llmStream) {
 const value = m.close();
 ```
 
-Each `feed()` costs only the new bytes — re-parsing the whole buffer per
+Each `feed()` parses only the new bytes — re-parsing the whole buffer per
 chunk (what you have to do with a batch repairer) is O(n²) in total and
 hundreds of times slower on long outputs.
+
+> Note: V8 re-flattens the growing buffer string on access, so feeding a
+> very large output **one character at a time** is super-linear on the JS
+> side. Feed in reasonable chunks (whole SSE/tool-call deltas, or ≥256 B)
+> and it stays fast. A prefix-discarding buffer that makes any feed size
+> O(new bytes) is planned. (The Python package is already amortised O(1)
+> per character.)
 
 ### API
 

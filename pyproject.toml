@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "jsonmend"
-version = "0.1.1"
+version = "0.1.2"
 description = "Mends the JSON your LLM almost wrote - fast single-pass repair with true incremental streaming"
 readme = "README.md"
 requires-python = ">=3.9"

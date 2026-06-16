@@ -117,6 +117,49 @@ def test_unmendable_stream():
     assert m.close() == ""
 
 
+def _total_buffer_copy_bytes(text):
+    """Drive the machine one char at a time and sum the bytes copied by
+    buffer growth.  With amortised-O(1) append (the in-place invariant)
+    this is O(n); if a reference pins the buffer across a yield it
+    degrades to O(n^2)."""
+    from jsonmend._engine import MendMachine
+    m = MendMachine()
+    copied = 0
+    for ch in text:
+        if m.done:
+            break
+        m.detach_partial()
+        s = m.s
+        m.s = None
+        before = id(s)
+        s += ch
+        if id(s) != before:          # CPython made a fresh copy
+            copied += len(s)
+        m.s = s
+        m.n = len(s)
+        try:
+            m._gen.send(None)
+        except StopIteration:
+            m.done = True
+    return copied
+
+
+@pytest.mark.skipif(
+    __import__("platform").python_implementation() != "CPython",
+    reason="in-place append identity is a CPython detail")
+def test_streaming_append_is_amortized_linear():
+    """Regression guard: feeding N chars must copy O(N) buffer bytes, not
+    O(N^2).  A Match (or any object) held across a yield pins the buffer
+    and silently reintroduces quadratic streaming — this catches that."""
+    doc = lambda rows: json.dumps(
+        [{"k": "v" * 8, "n": i, "f": i * 1.5, "ok": True, "s": "x y z"}
+         for i in range(rows)])
+    small = _total_buffer_copy_bytes(doc(500))
+    big = _total_buffer_copy_bytes(doc(5000))   # 10x the input
+    # O(n): big/small ~ 10.  O(n^2): big/small ~ 100.  Assert well under.
+    assert big < max(small, 4096) * 25, (small, big)
+
+
 def test_incremental_is_linear():
     """Feeding N chunks must not rescan old content: total work for a
     long clean stream should grow ~linearly.  We approximate by checking
