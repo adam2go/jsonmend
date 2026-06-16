@@ -117,14 +117,18 @@ def test_unmendable_stream():
     assert m.close() == ""
 
 
-def _total_buffer_copy_bytes(text):
-    """Drive the machine one char at a time and sum the bytes copied by
-    buffer growth.  With amortised-O(1) append (the in-place invariant)
-    this is O(n); if a reference pins the buffer across a yield it
-    degrades to O(n^2)."""
+def _buffer_copy_count(text):
+    """Drive the machine one char at a time and count how many feeds force
+    a fresh buffer object (a copy).  With amortised-O(1) append this is a
+    small constant (geometric reallocations only); if a reference pins the
+    buffer across a yield, nearly every feed copies -> O(n^2) streaming.
+
+    The *count* is the robust signal: copied *bytes* vary with the
+    platform allocator, but a correct engine copies the buffer only a
+    constant number of times regardless of length."""
     from jsonmend._engine import MendMachine
     m = MendMachine()
-    copied = 0
+    feeds = copies = 0
     for ch in text:
         if m.done:
             break
@@ -133,31 +137,41 @@ def _total_buffer_copy_bytes(text):
         m.s = None
         before = id(s)
         s += ch
-        if id(s) != before:          # CPython made a fresh copy
-            copied += len(s)
+        feeds += 1
+        if id(s) != before:          # CPython allocated a fresh object
+            copies += 1
         m.s = s
         m.n = len(s)
         try:
             m._gen.send(None)
         except StopIteration:
             m.done = True
-    return copied
+    return feeds, copies
 
 
 @pytest.mark.skipif(
     __import__("platform").python_implementation() != "CPython",
     reason="in-place append identity is a CPython detail")
 def test_streaming_append_is_amortized_linear():
-    """Regression guard: feeding N chars must copy O(N) buffer bytes, not
-    O(N^2).  A Match (or any object) held across a yield pins the buffer
-    and silently reintroduces quadratic streaming — this catches that."""
+    """Regression guard: streaming must be amortised O(1) per fed char.
+
+    A re.Match (or any object) held across a yield pins the growing buffer
+    at refcount > 1, so CPython copies the whole string every feed and
+    streaming silently goes quadratic.  A correct engine copies the buffer
+    only a constant number of times (geometric reallocation), so the copy
+    count stays tiny and does NOT scale with input length."""
     doc = lambda rows: json.dumps(
         [{"k": "v" * 8, "n": i, "f": i * 1.5, "ok": True, "s": "x y z"}
          for i in range(rows)])
-    small = _total_buffer_copy_bytes(doc(500))
-    big = _total_buffer_copy_bytes(doc(5000))   # 10x the input
-    # O(n): big/small ~ 10.  O(n^2): big/small ~ 100.  Assert well under.
-    assert big < max(small, 4096) * 25, (small, big)
+    feeds_s, copies_s = _buffer_copy_count(doc(500))
+    feeds_b, copies_b = _buffer_copy_count(doc(5000))   # 10x the input
+    # The O(n^2) bug copies the buffer on ~every feed (copies ~= feeds).
+    # Amortised O(1) copies it only a handful of times (reallocations), so
+    # the fraction of copying feeds is tiny and SHRINKS as input grows.
+    # 5% is far below the bug (~100%) and far above reality (<0.1%), so it
+    # is robust to per-platform allocator differences.
+    assert copies_b < feeds_b // 20, (copies_b, feeds_b)
+    assert copies_b <= max(copies_s, 50) * 2, (copies_s, copies_b)
 
 
 def test_incremental_is_linear():
