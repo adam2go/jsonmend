@@ -121,6 +121,23 @@ def test_quote_storm_is_linear():
     assert big < max(small, 1e-3) * 60, (small, big)
 
 
+def test_mixed_nested_brackets_is_linear():
+    """Closing braces scanned the whole frame stack ('any(f.kind=="o" ...)'),
+    making deeply mixed nesting like '({[({[...]})]})' quadratic."""
+    def run(reps):
+        text = "({[" * reps + "]})" * reps
+        t0 = time.perf_counter()
+        jsonmend.repair_json(text, skip_json_loads=True)
+        return time.perf_counter() - t0
+
+    run(2000)
+    run(2000)
+    small = min(run(2000) for _ in range(5))
+    big = min(run(20000) for _ in range(3))
+    # 10x input: O(n) ~10x, O(n^2) ~100x. 60x separates them with noise margin.
+    assert big < max(small, 1e-3) * 60, (small, big)
+
+
 def test_huge_clean_string_fast():
     text = '{"text": "' + "lorem ipsum " * 100_000 + '"}'  # ~1.2MB
     t0 = time.perf_counter()

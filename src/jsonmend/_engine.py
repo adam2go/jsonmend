@@ -166,6 +166,37 @@ class _Frame:
         self.eager = False  # already attached to the parent container
 
 
+class _FrameStack(list):
+    """A frame stack that maintains the number of object ('o') frames it
+    holds, so "is there an object frame open below me?" is O(1) instead of
+    an O(depth) scan on every closing brace - which made deeply nested input
+    like "({[({[..." quadratic. Frame.kind is immutable, so the count stays
+    correct as long as every push/pop goes through append/pop (they do)."""
+
+    __slots__ = ("n_obj",)
+
+    def __init__(self):
+        super().__init__()
+        self.n_obj = 0
+
+    def append(self, fr):
+        if getattr(fr, "kind", None) == "o":
+            self.n_obj += 1
+        super().append(fr)
+
+    def pop(self, *args):
+        fr = super().pop(*args)
+        if getattr(fr, "kind", None) == "o":
+            self.n_obj -= 1
+        return fr
+
+    def objects_below_top(self):
+        """Object frames in self[:-1] (i.e. excluding the current frame)."""
+        if self and self[-1].kind == "o":
+            return self.n_obj - 1
+        return self.n_obj
+
+
 class MendMachine:
     """Resumable mending machine.  Drives both batch and streaming APIs."""
 
@@ -177,7 +208,7 @@ class MendMachine:
         self.s = ""
         self.n = 0
         self.final = False
-        self.stack = []
+        self.stack = _FrameStack()
         self.values = []          # completed top-level values
         self.prose = []           # pending top-level prose lines
         self.done = False
@@ -591,7 +622,7 @@ class MendMachine:
                     i += 1
                     continue
                 if c == "]":
-                    if not any(f.kind != "o" for f in stack[:-1]):
+                    if len(stack) - 1 == stack.objects_below_top():
                         i += 1
                     stack.pop()
                     value = self._pop_value(fr)
@@ -721,7 +752,7 @@ class MendMachine:
                     mode = 2
                     continue
                 if c == "]":
-                    if not any(f.kind != "o" for f in stack[:-1]):
+                    if len(stack) - 1 == stack.objects_below_top():
                         i += 1
                     stack.pop()
                     value = self._pop_value(fr)
@@ -767,7 +798,7 @@ class MendMachine:
                     mode = 2
                     continue
                 if c == "}":
-                    if any(f.kind == "o" for f in stack[:-1]):
+                    if stack.objects_below_top():
                         stack.pop()
                         value = self._pop_value(fr)
                         mode = 2

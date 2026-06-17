@@ -21,7 +21,7 @@ from typing import IO, Any, Dict, List, Union
 
 from ._engine import SKIP, JSONMendError, MendMachine
 
-__version__ = "0.1.3"
+__version__ = "0.1.4"
 
 __all__ = [
     "repair_json", "loads", "load", "from_file",
